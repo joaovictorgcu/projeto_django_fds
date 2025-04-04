@@ -14,9 +14,6 @@ def cars_view(request):
         {'cars': cars}
     )
 
-from cars.models import Brand, Car
-from django.shortcuts import render, redirect
-
 def new_car_view(request):
     if request.method == "POST":
         model = request.POST.get("model")
