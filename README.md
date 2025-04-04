@@ -1,4 +1,4 @@
-# projeto_django_fds
+# FastCar
 Projeto no Framework Django, sobre revenda de carros, para a cadeira de Fundamentos de Desenvolvimento de Software.
 
 # Contribuidores
