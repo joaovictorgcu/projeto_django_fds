@@ -5,7 +5,9 @@ A Match Auto é um site de compra e venda de carros pela internet. Você pode pr
 
 # Links:
 Jira - https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
+
 Figma - 
+
 Docs - https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing
 
 # Entrega 1️⃣:
