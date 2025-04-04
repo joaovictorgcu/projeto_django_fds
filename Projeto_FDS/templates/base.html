@@ -1,90 +1,149 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}{% endblock %}</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-        font-family: 'Open Sans', sans-serif;
-        background-color: #f7f7f7;
-        color: #333;
-        margin: 0;
-        padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
     }
 
     header {
-        background-color: #0096c7;
-        color: #fff;
-        text-align: center;
+      background-color: #d62828;
+      color: #fff;
+      padding: 20px 0;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     }
 
-    footer {
-        background-color: #ccc;
-        color: #333;
-        padding: 20px;
-        text-align: center;
+    header h1 {
+      font-size: 2rem;
     }
 
     nav {
-        background-color: #0096c7;
-        color: #fff;
-        height: 50px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+      background-color: #d62828;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
+      padding: 10px 0;
     }
 
     nav ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-        display: flex;
-    }
-
-    nav ul li {
-        margin: 0 10px;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      align-items: center;
+      padding: 0;
+      margin: 0;
     }
 
     nav ul li a {
-        color: #fff;
-        text-decoration: none;
-        font-size: 16px;
-        padding: 15px;
-        transition: all 0.3s ease;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 10px 15px;
+      border-radius: 8px;
+      transition: background-color 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
 
     nav ul li a:hover {
-        background-color: #32bbe8;
+      background-color: #a4161a;
     }
 
     nav ul li.active a {
-        background-color: #666;
+      background-color: #6a040f;
     }
 
-    nav ul li.active a:hover {
-        background-color: #999;
+    main {
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
     }
 
+    footer {
+      background-color: #222;
+      color: #ddd;
+      padding: 20px;
+      text-align: center;
+      margin-top: 40px;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    nav form input[type="text"] {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: none;
+      outline: none;
+    }
+
+    nav form button {
+      background-color: #a4161a;
+      color: white;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+
+    @media (max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      main {
+        margin: 20px;
+        padding: 20px;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
+    <h1>Gestão de Carros</h1>
     <nav>
       <ul>
-            {% if user.is_authenticated %}
-            <li> Olá, {{ user.username }} </li>
-            <li><a href="{% url 'new_car' %}">Cadastrar Carros</a></li>
-            {% endif    %}
-            {% if not user.is_authenticated %}
-            <li><a href="{% url 'register' %}">Cadastre-se</a><li>
-            <li><a href="{% url 'login' %}">Login</a><li>
-            {% endif %}
-            <li><a href="{% url 'cars_list' %}">Carros</a></li>
-
-            {% if user.is_authenticated %}
-            <li><a href="{% url 'logout' %}">Sair</a><li>
-            {% endif    %}
+        {% if user.is_authenticated %}
+          <li style="color: white; font-weight: bold;">Olá, {{ user.username }}</li>
+          <li><a href="{% url 'new_car' %}"><i data-lucide="plus-circle"></i> Novo Carro</a></li>
+        {% else %}
+          <li><a href="{% url 'register' %}"><i data-lucide="user-plus"></i> Cadastre-se</a></li>
+          <li><a href="{% url 'login' %}"><i data-lucide="log-in"></i> Login</a></li>
+        {% endif %}
+        <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
+        {% if user.is_authenticated %}
+          <li><a href="{% url 'logout' %}"><i data-lucide="log-out"></i> Sair</a></li>
+        {% endif %}
+        <li>
+          <form method="GET" action="{% url 'cars_list' %}" style="display: flex; align-items: center; gap: 6px;">
+            <input type="text" name="search" placeholder="Buscar...">
+            <button type="submit"><i data-lucide="search"></i></button>
+          </form>
+        </li>
       </ul>
     </nav>
   </header>
@@ -95,7 +154,11 @@
   </main>
 
   <footer>
-    <p>&copy; 2025 CESAR School.</p>
+    <p>&copy; 2025 CESAR School. Todos os direitos reservados.</p>
   </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
 </body>
 </html>
