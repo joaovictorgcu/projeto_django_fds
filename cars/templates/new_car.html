@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Novo Carro{% endblock %}
+{% block content %}
+  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+    <h2 style="text-align: center;">Cadastrar Novo Carro</h2>
+    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
+      {% csrf_token %}
+      <input type="text" name="model" placeholder="Modelo" required>
+      <select name="brand" required>
+        <option value="">Marca</option>
+        {% for brand in brands %}
+          <option value="{{ brand.id }}">{{ brand.name }}</option>
+        {% endfor %}
+      </select>
+      <input type="number" name="factory_year" placeholder="Ano de Fabricação">
+      <input type="number" name="model_year" placeholder="Ano do Modelo">
+      <input type="text" name="plate" placeholder="Placa">
+      <input type="number" step="0.01" name="value" placeholder="Valor">
+      <input type="file" name="photo">
+      <button type="submit" style="background-color: #0096c7; color: white; border: none; padding: 10px;">Cadastrar</button>
+    </form>
+  </div>
+{% endblock %}
