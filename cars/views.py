@@ -14,16 +14,13 @@ def cars_view(request):
         {'cars': cars}
     )
 
-from cars.models import Brand, Car
-from django.shortcuts import render, redirect
-
 def new_car_view(request):
     if request.method == "POST":
         model = request.POST.get("model")
         brand_id = request.POST.get("brand")
         factory_year = request.POST.get("factory_year")
         model_year = request.POST.get("model_year")
-        plate = request.POST.get("plate")
+        km = request.POST.get("km")
         value = request.POST.get("value")
         photo = request.FILES.get("photo")
 
@@ -34,7 +31,7 @@ def new_car_view(request):
             brand=brand,
             factory_year=factory_year,
             model_year=model_year,
-            plate=plate,
+            km=km,
             value=value,
             photo=photo
         )
