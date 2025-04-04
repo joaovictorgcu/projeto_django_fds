@@ -8,6 +8,6 @@ from cars.views import cars_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('carros/', cars_view),
+    path('carros/', cars_view, name = 'cars_list'),
 ]   + static(settings.MEDIA_URL, documento_root = settings.MEDIA_ROOT)
 
