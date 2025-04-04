@@ -102,7 +102,7 @@
             <p class="no-photo"> Foto não disponível.</p>
             {% endif %}
           <h2>{{ car.brand }} {{ car.model }}</h2>
-          <p>{{ car.factory_year }} - R$ {{ car.value }}</p>
+          <p>{{ car.factory_year }} - R$ {{ car.value }} - {{ car.km }}km</p>
         </div>
       {% endfor %}
     {% else %}

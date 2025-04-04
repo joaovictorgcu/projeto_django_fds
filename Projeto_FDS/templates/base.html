@@ -1,4 +1,5 @@
-<!DOCTYPE html> 
+{% load static %}
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
@@ -25,10 +26,14 @@
       padding: 20px 0;
       text-align: center;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
     }
 
-    header h1 {
-      font-size: 2rem;
+    .logo {
+      height: 60px;
     }
 
     nav {
@@ -66,10 +71,6 @@
       background-color: #a4161a;
     }
 
-    nav ul li.active a {
-      background-color: #6a040f;
-    }
-
     main {
       max-width: 900px;
       margin: 40px auto;
@@ -86,67 +87,35 @@
       text-align: center;
       margin-top: 40px;
     }
-
-    footer p {
-      margin: 0;
-    }
-
-    nav form input[type="text"] {
-      padding: 8px 12px;
-      border-radius: 8px;
-      border: none;
-      outline: none;
-    }
-
-    nav form button {
-      background-color: #a4161a;
-      color: white;
-      padding: 8px 12px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-    }
-
-    @media (max-width: 600px) {
-      nav ul {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      main {
-        margin: 20px;
-        padding: 20px;
-      }
-    }
   </style>
 </head>
 <body>
   <header>
-    <h1>FastCar</h1>
-    <nav>
-      <ul>
-        {% if user.is_authenticated %}
-          <li style="color: white; font-weight: bold;">Olá, {{ user.username }}</li>
-          <li><a href="{% url 'new_car' %}"><i data-lucide="plus-circle"></i> Novo Carro</a></li>
-        {% else %}
-          <li><a href="{% url 'register' %}"><i data-lucide="user-plus"></i> Cadastre-se</a></li>
-          <li><a href="{% url 'login' %}"><i data-lucide="log-in"></i> Login</a></li>
-        {% endif %}
-        <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
-        {% if user.is_authenticated %}
-          <li><a href="{% url 'logout' %}"><i data-lucide="log-out"></i> Sair</a></li>
-        {% endif %}
-        <li>
-          <form method="GET" action="{% url 'cars_list' %}" style="display: flex; align-items: center; gap: 6px;">
-            <input type="text" name="search" placeholder="Buscar...">
-            <button type="submit"><i data-lucide="search"></i></button>
-          </form>
-        </li>
-      </ul>
-    </nav>
+    <img src="{% static 'img/Match_Auto_Logo-removebg.png' %}" alt="MatchAuto Logo" class="logo">
+    <h1>MatchAuto</h1>
   </header>
+
+  <nav>
+    <ul>
+      {% if user.is_authenticated %}
+        <li style="color: white; font-weight: bold;">Olá, {{ user.username }}</li>
+        <li><a href="{% url 'new_car' %}"><i data-lucide="plus-circle"></i> Novo Carro</a></li>
+      {% else %}
+        <li><a href="{% url 'register' %}"><i data-lucide="user-plus"></i> Cadastre-se</a></li>
+        <li><a href="{% url 'login' %}"><i data-lucide="log-in"></i> Login</a></li>
+      {% endif %}
+      <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
+      {% if user.is_authenticated %}
+        <li><a href="{% url 'logout' %}"><i data-lucide="log-out"></i> Sair</a></li>
+      {% endif %}
+      <li>
+        <form method="GET" action="{% url 'cars_list' %}" style="display: flex; align-items: center; gap: 6px;">
+          <input type="text" name="search" placeholder="Buscar...">
+          <button type="submit"><i data-lucide="search"></i></button>
+        </form>
+      </li>
+    </ul>
+  </nav>
 
   <main>
     {% block content %}
