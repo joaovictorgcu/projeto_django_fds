@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+  <div style="max-width: 400px; margin: 40px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <h2 style="text-align:center;">Login</h2>
+
+    {% if messages %}
+      {% for message in messages %}
+        <div style="margin-bottom: 15px; padding: 10px; border-radius: 5px;
+                    {% if message.tags == 'success' %}
+                      background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb;
+                    {% elif message.tags == 'error' %}
+                      background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb;
+                    {% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form method="POST">
+      {% csrf_token %}
+      <div style="margin-bottom: 15px;">
+        <input type="text" name="username" placeholder="Usuário" required style="width: 100%; padding: 10px;">
+      </div>
+      <div style="margin-bottom: 15px;">
+        <input type="password" name="password" placeholder="Senha" required style="width: 100%; padding: 10px;">
+      </div>
+      <button type="submit" style="width: 100%; padding: 10px; background-color: #0096c7; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
+        Entrar
+      </button>
+    </form>
+  </div>
+{% endblock %}

@@ -3,7 +3,7 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 from cars.views import cars_view,new_car_view
-from accounts.views import register_view
+from accounts.views import register_view, login_view
 
 
 urlpatterns = [
@@ -11,5 +11,6 @@ urlpatterns = [
     path('carros/', cars_view, name = 'cars_list'),
     path('new_car', new_car_view, name = 'new_car'),
     path('registro/', register_view, name = 'register'),
+    path('login', login_view, name = 'login'),
 ]   + static(settings.MEDIA_URL, documento_root = settings.MEDIA_ROOT)
 
