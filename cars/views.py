@@ -3,7 +3,7 @@ from cars.models import Car
 
 
 def cars_view(request): 
-    Car.objects.all()
+    cars = Car.objects.filter(model = 'Chevette Tubarao')
 
     return render(
         request, 
