@@ -55,7 +55,7 @@ ROOT_URLCONF = 'Projeto_FDS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['Projeto_FDS/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
