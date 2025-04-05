@@ -8,9 +8,14 @@
 
     <!-- MENSAGENS -->
     {% if messages %}
-      <ul style="color: red; padding-left: 20px; margin-bottom: 15px;">
+      <ul style="padding-left: 20px; margin-bottom: 15px;">
         {% for message in messages %}
-          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+          <li
+            {% if message.tags %} class="{{ message.tags }}"{% endif %}
+            style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %}; font-weight: bold;"
+          >
+            {{ message }}
+          </li>
         {% endfor %}
       </ul>
     {% endif %}
@@ -31,4 +36,13 @@
       </button>
     </form>
   </div>
+
+  <!-- Redirecionamento após sucesso -->
+  {% if redirect_after_success %}
+    <script>
+      setTimeout(function () {
+        window.location.href = "{% url 'login' %}";
+      }, 1500);
+    </script>
+  {% endif %}
 {% endblock %}

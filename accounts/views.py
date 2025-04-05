@@ -19,10 +19,11 @@ def register_view(request):
             return render(request, 'register.html')
 
         User.objects.create_user(username=username, password=password1)
-        messages.success(request, 'Usuário criado com sucesso!')
-        return redirect('login')
+        messages.success(request, 'Usuário criado com sucesso!\n Redirecionando para página de login.')
+        return render(request, 'register.html', {'redirect_after_success': True})  # ⬅ flag pra ativar o redirecionamento
 
     return render(request, "register.html")
+
 
 def login_view(request):
     if request.method == "POST":
