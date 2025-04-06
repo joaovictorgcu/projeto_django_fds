@@ -18,14 +18,17 @@ A Match Auto é um site de compra e venda de carros pela internet. Você pode pr
 - *Figma:* https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1
 
 # Entrega 2️⃣:
-- *Sprint 1:* 
+- *Sprint 1(Concluida):* 
+![alt text](<media/entregas/Sprint 1.jpg>)
 
-- *Sprint 2:*
+- *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
 
 - *Programação em Par:*
 Durante o desenvolvimento do projeto, a gente não seguiu exatamente o modelo de programação em par tradicional. Em vez de dois integrantes programando juntos ao mesmo tempo, decidimos nos organizar de uma forma que funcionasse melhor pra gente: fizemos tudo em conjunto, mas dividindo as tarefas para que cada um pudesse contribuir um pouco por vez.
 Nos reunimos, discutimos o que precisava ser feito, e aí cada pessoa ficou responsável por uma parte específica do projeto. Fomos trocando ideias e nos ajudando ao longo do processo, mas sem necessariamente estarmos lado a lado programando o tempo todo.
 Mesmo não usando a programação em par do jeito clássico, todo mundo participou e colaborou de forma ativa. Foi uma forma que encontramos de trabalhar em grupo de forma leve e eficiente, respeitando o tempo e o ritmo de cada um.
+
+- *Bug tracker:*
 
 # Contribuidores
 
