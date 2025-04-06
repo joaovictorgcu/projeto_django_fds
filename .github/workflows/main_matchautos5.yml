@@ -1,4 +1,4 @@
-name: Build and deploy Python app to Azure Web App - matchautos
+name: Build and deploy Python app to Azure Web App - matchautos5
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read # Required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
@@ -20,27 +20,17 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: Create and start virtual environment
+      - name: Verificar estrutura de arquivos
+        run: ls -R
+
+      - name: Create and activate virtual environment
         run: |
           python -m venv venv
           source venv/bin/activate
-      
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Cleaning testing files
-        run: |
-          cd Projeto_FDS/
-          rm -f db.sqlite3
-          rm -f .env
-          cd ..
+          pip install -r "MATCHAUTO/Projeto_FDS/requirements.txt"
 
       - name: Zip artifact for deployment
-        run: |
-          cd Projeto_FDS/
-          zip release.zip ./* -r
-          cd ..
-          mv Projeto_FDS/release.zip .
+        run: zip release.zip ./* -r
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -57,8 +47,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write # Required for requesting the JWT
-      contents: read # Required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Download artifact from build job
@@ -72,13 +62,13 @@ jobs:
       - name: Login to Azure
         uses: azure/login@v2
         with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E82F48FEAEBC4D26A3FA5E575074913E }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_368D6AB1D7C7482981E1D1DC46AADBC5 }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_4DAB68EF967642AA9332D1EAD497CE0C }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E5060E2C4E7F44E7BA0A923812697230 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_525CEA1F516E412CAE273197F30A74CC }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_918B240AE40E46D4BFE6DC2B2359DE43 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'matchautos'
+          app-name: 'matchautos5'
           slot-name: 'Production'
