@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalhes do Carro{% endblock %}
+
+{% block content %}
+  <div style="text-align: center;">
+    <h2>{{ carro.nome }}</h2>
+    <img src="{{ carro.imagem.url }}" alt="{{ carro.nome }}" style="max-width: 100%; height: auto; border-radius: 12px; margin-top: 20px;">
+    <p style="margin-top: 20px;">{{ carro.descricao }}</p>
+
+    {% if user.is_authenticated %}
+      <form action="{% url 'favoritar_carro' carro.id %}" method="post" style="margin-top: 30px;">
+        {% csrf_token %}
+        {% if ja_favoritado %}
+          <button type="submit" disabled style="background-color: gray; color: white; padding: 10px 20px; border: none; border-radius: 8px;">
+            Já Favoritado
+          </button>
+        {% else %}
+          <button type="submit" style="background-color: #d62828; color: white; padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;">
+            Favoritar Carro ❤️
+          </button>
+        {% endif %}
+      </form>
+    {% else %}
+      <p style="margin-top: 20px; color: #a4161a;">Faça login para favoritar este carro.</p>
+    {% endif %}
+  </div>
+{% endblock %}
