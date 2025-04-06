@@ -2,6 +2,8 @@
 {% get_media_prefix as MEDIA_URL %}
 <!DOCTYPE html>
 <html lang="pt-br">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -120,7 +122,6 @@
       margin-top: 40px;
     }
 
-    /* Estilo dos cards de carros */
     .car-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -164,11 +165,13 @@
       {% if user.is_authenticated %}
         <li style="color: white; font-weight: bold;">Olá, {{ user.username }}</li>
         <li><a href="{% url 'new_car' %}"><i data-lucide="plus-circle"></i> Novo Carro</a></li>
+        <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
+        <li><a href="{% url 'lista_favoritos' %}"><i data-lucide="heart"></i> Favoritos</a></li>
       {% else %}
         <li><a href="{% url 'register' %}"><i data-lucide="user-plus"></i> Cadastre-se</a></li>
         <li><a href="{% url 'login' %}"><i data-lucide="log-in"></i> Login</a></li>
+        <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
       {% endif %}
-      <li><a href="{% url 'cars_list' %}"><i data-lucide="car"></i> Carros</a></li>
       {% if user.is_authenticated %}
         <li><a href="{% url 'logout' %}"><i data-lucide="log-out"></i> Sair</a></li>
       {% endif %}

@@ -24,6 +24,63 @@
     {% endif %}
   </div>
 
+  <!-- COMENTÁRIOS -->
+  <div class="comentarios-container">
+    <h3>Comentários</h3>
+
+    {% if user.is_authenticated %}
+      <form id="comentario-form" method="post" class="comentario-form">
+        {% csrf_token %}
+        <textarea name="texto" rows="3" placeholder="Escreva seu comentário aqui..." required></textarea>
+        <button type="submit">Enviar comentário</button>
+      </form>
+    {% else %}
+      <p><a href="{% url 'login' %}">Faça login</a> para comentar.</p>
+    {% endif %}
+
+    <ul class="comentarios-lista" id="comentarios-lista">
+      {% for comentario in comentarios %}
+        <li>
+          <strong>{{ comentario.autor.username }}</strong> em {{ comentario.criado_em|date:"d/m/Y H:i" }}<br>
+          {{ comentario.texto }}
+        </li>
+      {% empty %}
+        <li>Seja o primeiro a comentar!</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+    const form = document.getElementById('comentario-form');
+
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        const formData = new FormData(form);
+        const response = await fetch("", {
+          method: "POST",
+          headers: {
+            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+          },
+          body: formData,
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+
+          const lista = document.getElementById('comentarios-lista');
+          const novo = document.createElement('li');
+          novo.innerHTML = `<strong>${data.autor}</strong> em ${data.data}<br>${data.texto}`;
+          lista.prepend(novo);
+          form.reset();
+        } else {
+          alert('Erro ao enviar comentário.');
+        }
+      });
+    }
+  </script>
+
   <style>
     .car-container {
       background-color: #fff;
@@ -56,6 +113,54 @@
 
     .favorito-btn:hover {
       background-color: #a4161a;
+    }
+
+    .comentarios-container {
+      max-width: 700px;
+      margin: 40px auto 0;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    }
+
+    .comentarios-container h3 {
+      margin-bottom: 16px;
+    }
+
+    .comentario-form textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 10px;
+    }
+
+    .comentario-form button {
+      background-color: #d62828;
+      color: white;
+      padding: 10px 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .comentario-form button:hover {
+      background-color: #a4161a;
+    }
+
+    .comentarios-lista {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .comentarios-lista li {
+      background: #f2f2f2;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 12px;
     }
   </style>
 {% endblock %}

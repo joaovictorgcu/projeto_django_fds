@@ -1,4 +1,8 @@
-{% extends "base.html" %}  
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Carros Favoritos{% endblock %}
+
 {% block content %}
   <style>
     .car-grid {
@@ -36,12 +40,15 @@
       object-fit: cover;
     }
 
+    .car-card h3 {
+      font-size: 20px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
     .car-card h2 {
       font-size: 1.5rem;
       margin: 10px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
     .car-card p {
@@ -56,23 +63,25 @@
     }
   </style>
 
+  <h2 style="text-align: center; margin-top: 20px;">Carros Favoritos</h2>
+
   <div class="car-grid">
-    {% if cars %}
-      {% for car in cars %}
-        <a href="{% url 'detalhes_carro' car.id %}" class="car-link">
+    {% if favoritos %}
+      {% for fav in favoritos %}
+        <a href="{% url 'detalhes_carro' fav.carro.id %}" class="car-link">
           <div class="car-card">
-            {% if car.photo %}
-              <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+            {% if fav.carro.photo %}
+              <img src="{{ fav.carro.photo.url }}" alt="{{ fav.carro.model }}">
             {% else %}
-              <p class="no-photo">Foto não disponível.</p>
+              <p>Foto não disponível.</p>
             {% endif %}
-            <h2>{{ car.brand }} {{ car.model }}</h2>
-            <p>{{ car.factory_year }} - R$ {{ car.value }} - {{ car.km }}km</p>
+            <h2>{{ fav.carro.brand }} {{ fav.carro.model }}</h2>
+            <p>{{ fav.carro.factory_year }} - R$ {{ fav.carro.value }} - {{ fav.carro.km }}km</p>
           </div>
         </a>
       {% endfor %}
     {% else %}
-      <p class="no-results">Nenhum carro encontrado.</p>
+      <p style="text-align: center;">Você ainda não favoritou nenhum carro.</p>
     {% endif %}
   </div>
 {% endblock %}

@@ -1,18 +1,26 @@
 from django.shortcuts import render, redirect
 from cars.models import Car, Brand
+from interacoes.models import Favorito  # importa o modelo de favoritos
 
 def cars_view(request): 
     cars = Car.objects.all().order_by('model')
     search = request.GET.get('search')
     
     if search:
-        cars = cars.filter(model__icontains = search).order_by('model')
+        cars = cars.filter(model__icontains=search).order_by('model')
+
+    favoritos_ids = []
+    if request.user.is_authenticated:
+        favoritos_ids = list(
+            Favorito.objects.filter(usuario=request.user).values_list('carro__id', flat=True)
+        )
 
     return render(
         request, 
         'cars.html',
-        {'cars': cars}
+        {'cars': cars, 'favoritos_ids': favoritos_ids}
     )
+
 
 def new_car_view(request):
     if request.method == "POST":
@@ -41,9 +49,5 @@ def new_car_view(request):
     brands = Brand.objects.all()
     return render(request, 'new_car.html', {'brands': brands})
 
-
 def index_view(request):
     return render(request, 'index.html')
-
-
-
