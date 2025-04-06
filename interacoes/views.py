@@ -40,7 +40,11 @@ from cars.models import Car  # certifique-se que está importando o modelo certo
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
-    ja_favoritado = carro.favoritos.filter(id=request.user.id).exists() if request.user.is_authenticated else False
+
+    ja_favoritado = False
+    if request.user.is_authenticated:
+        ja_favoritado = Favorito.objects.filter(usuario=request.user, carro=carro).exists()
+
     comentarios = Comentario.objects.filter(carro=carro).order_by('-criado_em')
 
     if request.method == "POST" and request.user.is_authenticated:
@@ -63,3 +67,4 @@ def detalhes_carro(request, carro_id):
         'comentarios': comentarios,
     }
     return render(request, 'interacoes/detalhes_carro.html', context)
+
