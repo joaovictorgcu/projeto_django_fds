@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Detalhes do Carro{% endblock %}
+
+{% block content %}
+  <div class="car-container">
+    {% if carro.photo %}
+      <img src="{{ carro.photo.url }}" alt="{{ carro.model }}" class="car-img">
+    {% endif %}
+    <h1 style="margin-top: 20px;">{{ carro.model }}</h1>
+    <p><strong>Marca:</strong> {{ carro.brand.name }}</p>
+    <p><strong>Ano de Fabricação:</strong> {{ carro.factory_year }}</p>
+    <p><strong>Ano do Modelo:</strong> {{ carro.model_year }}</p>
+    <p><strong>KM:</strong> {{ carro.km|default:"N/A" }} km</p>
+    <p><strong>Valor:</strong> R$ {{ carro.value|floatformat:2 }}</p>
+
+    {% if user.is_authenticated %}
+      {% if ja_favoritado %}
+        <p style="color: green; font-weight: bold;">✅ Este carro já está nos seus favoritos.</p>
+      {% else %}
+        <a href="{% url 'favoritar_carro' carro.id %}" class="favorito-btn">❤️ Adicionar aos Favoritos</a>
+      {% endif %}
+    {% endif %}
+  </div>
+
+  <style>
+    .car-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .car-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      object-fit: cover;
+      max-height: 500px;
+    }
+
+    .favorito-btn {
+      margin-top: 20px;
+      display: inline-block;
+      background-color: #d62828;
+      color: white;
+      padding: 10px 18px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .favorito-btn:hover {
+      background-color: #a4161a;
+    }
+  </style>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Início | Match Auto{% endblock %}
+
+{% block content %}
+  <!-- Hero Section -->
+  <section style="padding: 60px 20px; text-align: center;">
+    <h1 style="font-size: 36px; color: #d62828;">Bem-vindo à Match Auto!</h1>
+    <p style="font-size: 18px; max-width: 700px; margin: 20px auto;">
+      A <strong>Match Auto</strong> é o seu portal para comprar e vender carros com facilidade, segurança e rapidez. Explore opções de veículos, compare preços, veja fotos detalhadas e anuncie o seu automóvel em poucos cliques.
+    </p>
+  </section>
+
+  <!-- Como Funciona -->
+  <section style="padding: 40px 20px; background-color: #f2f2f2; border-radius: 12px;">
+    <h2 style="color: #d62828; text-align: center; margin-bottom: 30px;">Como funciona?</h2>
+    <ul style="list-style: none; padding: 0; max-width: 800px; margin: 0 auto; font-size: 16px;">
+      <li style="margin-bottom: 20px;"><strong>1.</strong> Procure carros disponíveis usando a busca no topo da página.</li>
+      <li style="margin-bottom: 20px;"><strong>2.</strong> Clique nos veículos para ver mais detalhes, fotos e informações de contato.</li>
+      <li style="margin-bottom: 20px;"><strong>3.</strong> Cadastre-se e anuncie seu carro em minutos!</li>
+    </ul>
+  </section>
+
+  <!-- Call to Action -->
+  <section style="padding: 60px 20px; text-align: center;">
+    {% if user.is_authenticated %}
+      <a href="{% url 'new_car' %}" style="font-size: 20px; background-color: #d62828; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;">Anunciar meu carro</a>
+    {% else %}
+      <a href="{% url 'register' %}" style="font-size: 20px; background-color: #d62828; color: white; padding: 12px 24px; border-radius: 8px; text-decoration: none;">Começar agora</a>
+    {% endif %}
+  </section>
+{% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %} 
 {% block content %}
   <style>
     .car-grid {
@@ -8,6 +8,11 @@
       margin: 0 auto;
       max-width: 1200px;
       padding: 20px;
+    }
+
+    .car-link {
+      text-decoration: none;
+      color: inherit;
     }
 
     .car-card {
@@ -57,15 +62,17 @@
   <div class="car-grid">
     {% if cars %}
       {% for car in cars %}
-        <div class="car-card">
+        <a href="{% url 'detalhes_carro' car.id %}" class="car-link">
+          <div class="car-card">
             {% if car.photo %}
-            <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
+              <img src="{{ car.photo.url }}" alt="{{ car.model }} - {{ car.brand }}">
             {% else %}
-            <p class="no-photo"> Foto não disponível.</p>
+              <p class="no-photo"> Foto não disponível.</p>
             {% endif %}
-          <h2>{{ car.brand }} {{ car.model }}</h2>
-          <p>{{ car.factory_year }} - R$ {{ car.value }} - {{ car.km }}km</p>
-        </div>
+            <h2>{{ car.brand }} {{ car.model }}</h2>
+            <p>{{ car.factory_year }} - R$ {{ car.value }} - {{ car.km }}km</p>
+          </div>
+        </a>
       {% endfor %}
     {% else %}
       <p class="no-results">Nenhum carro encontrado.</p>

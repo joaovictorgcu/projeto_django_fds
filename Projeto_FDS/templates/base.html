@@ -154,7 +154,7 @@
 </head>
 <body>
   <header>
-    <a href="{% url 'cars_list' %}">
+    <a href="{% url 'index' %}">
       <img src="{{ MEDIA_URL }}cars/Match_Auto_Logo-removebg.png" alt="MatchAuto Logo" class="logo">
     </a>
   </header>
@@ -186,15 +186,17 @@
       <h2 style="margin-bottom: 20px;">Carros Disponíveis</h2>
       <div class="car-grid">
         {% for car in cars %}
-          <div class="car-card">
-            <img src="{{ car.imagem.url }}" alt="{{ car.nome }}" class="car-img">
-            <div style="padding: 16px;">
-              <h3 style="margin-bottom: 8px;">{{ car.nome }}</h3>
-              <p style="color: #666;">{{ car.descricao }}</p>
+          <a href="{% url 'detalhes_carro' car.id %}" style="text-decoration: none; color: inherit;">
+            <div class="car-card">
+              <img src="{{ car.imagem.url }}" alt="{{ car.nome }}" class="car-img">
+              <div style="padding: 16px;">
+                <h3 style="margin-bottom: 8px;">{{ car.nome }}</h3>
+                <p style="color: #666;">{{ car.descricao }}</p>
+              </div>
             </div>
-          </div>
+          </a>
         {% endfor %}
-      </div>
+      </div>      
     {% endblock %}
   </main>
 

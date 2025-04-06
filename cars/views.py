@@ -40,3 +40,10 @@ def new_car_view(request):
     
     brands = Brand.objects.all()
     return render(request, 'new_car.html', {'brands': brands})
+
+
+def index_view(request):
+    return render(request, 'index.html')
+
+
+
