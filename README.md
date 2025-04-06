@@ -20,6 +20,7 @@ A Match Auto é um site de compra e venda de carros pela internet. Você pode pr
 # Entrega 2️⃣:
 - *Sprint 1(Concluida):* 
 ![alt text](<media/entregas/Sprint 1.jpg>)
+![alt text](<media/entregas/Quadro 1 concluido.jpg>)
 
 - *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
 
