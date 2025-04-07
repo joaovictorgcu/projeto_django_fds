@@ -32,6 +32,30 @@ Nos reunimos, discutimos o que precisava ser feito, e aí cada pessoa ficou resp
 Mesmo não usando a programação em par do jeito clássico, todo mundo participou e colaborou de forma ativa. Foi uma forma que encontramos de trabalhar em grupo de forma leve e eficiente, respeitando o tempo e o ritmo de cada um.
 
 - *Bug tracker:*
+1. Campo de ano do carro aceita valores inválidos (ex: 1200)
+
+Descrição:
+O campo destinado ao ano de fabricação do carro está aceitando qualquer valor numérico, inclusive anos irreais como 1200 ou 3025. Isso compromete a integridade dos dados e pode gerar inconsistências na listagem de veículos.
+
+2. Login falha sem mensagem clara quando senha está incorreta
+
+Descrição:
+Quando o usuário tenta fazer login com um nome de usuário válido, mas insere a senha incorreta, o sistema não apresenta uma mensagem de erro clara. Isso pode causar frustração, já que o usuário não sabe o que deu errado.
+
+3. Permite cadastro com usuário que já existe
+
+Descrição:
+O sistema permite tentar cadastrar um novo usuário com um nome de usuário (username) que já está em uso, sem exibir uma mensagem clara de erro. Isso pode causar confusão para o usuário, que não entende o motivo do cadastro falhar.
+
+4. Usuário não consegue adicionar carro, favoritar ou comentar sem estar logado
+
+Descrição:
+Atualmente, o sistema exige que o usuário esteja logado para poder adicionar carros, favoritar anúncios ou comentar em publicações. No entanto, essa limitação não está prevista nos requisitos e impede a interação de usuários não autenticados com funcionalidades importantes da plataforma.
+
+Funcionalidades afetadas:
+	4.1	Adicionar um novo carro
+	4.2	Favoritar veículos
+	4.3 Comentar em anúncios
 
 # Contribuidores
 
