@@ -78,7 +78,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'matchautos.urls'
+ROOT_URLCONF = 'MATCHAUTOS.urls'
 
 TEMPLATES = [
     {
@@ -96,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'matchautos.wsgi.application'
+WSGI_APPLICATION = 'MATCHAUTOS.wsgi.application'
 
 # Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
