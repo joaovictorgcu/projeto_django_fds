@@ -1,1 +1,1 @@
-web: gunicorn MATCHAUTOS.wsgi
+web: gunicorn MATCHAUTOS.wsgi --log-file -
