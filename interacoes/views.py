@@ -2,7 +2,7 @@ from django.shortcuts import redirect, get_object_or_404
 from interacoes.models import Favorito
 from cars.models import Car
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comentario
 
 def detalhes_carro(request, carro_id):
@@ -31,6 +31,7 @@ def favoritar_carro(request, carro_id):
 def lista_favoritos(request):
     favoritos = Favorito.objects.filter(usuario=request.user)
     return render(request, 'interacoes/lista_favoritos.html', {'favoritos': favoritos})
+
 
 
 from django.shortcuts import render, get_object_or_404
