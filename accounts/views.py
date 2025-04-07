@@ -19,8 +19,7 @@ def register_view(request):
             return render(request, 'register.html')
 
         User.objects.create_user(username=username, password=password1)
-        messages.success(request, 'Usuário criado com sucesso!\n Redirecionando para página de login.')
-        return render(request, 'register.html', {'redirect_after_success': True})  # ⬅ flag pra ativar o redirecionamento
+        return redirect('/login?from=register')  # redireciona com flag
 
     return render(request, "register.html")
 
@@ -35,11 +34,12 @@ def login_view(request):
         if user is not None:
             login(request, user)
             messages.success(request, "Login realizado com sucesso!")
-            return redirect('cars_list')  # redireciona para a página de carros, por exemplo
+            return redirect('cars_list')  # redireciona para a lista de carros
         else:
             messages.error(request, "Usuário ou senha inválidos.")
 
     return render(request, 'login.html')
+
 
 def logout_view(request):
     logout(request)

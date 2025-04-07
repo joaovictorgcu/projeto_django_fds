@@ -12,8 +12,7 @@
         {% for message in messages %}
           <li
             {% if message.tags %} class="{{ message.tags }}"{% endif %}
-            style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %}; font-weight: bold;"
-          >
+            style="color: {% if message.tags == 'success' %}green{% else %}red{% endif %}; font-weight: bold;">
             {{ message }}
           </li>
         {% endfor %}
@@ -36,13 +35,4 @@
       </button>
     </form>
   </div>
-
-  <!-- Redirecionamento após sucesso -->
-  {% if redirect_after_success %}
-    <script>
-      setTimeout(function () {
-        window.location.href = "{% url 'login' %}";
-      }, 1000);
-    </script>
-  {% endif %}
 {% endblock %}
