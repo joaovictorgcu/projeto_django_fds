@@ -14,7 +14,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read # This is required for actions/checkout
 
     steps:
       - uses: actions/checkout@v4
@@ -28,14 +28,23 @@ jobs:
         run: |
           python -m venv venv
           source venv/bin/activate
-      
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+        run: pip install -r 'PROJETO FDS ULTIMO/requirements.txt'
+
+      - name: Cleaning testing files
+        run: |
+          cd 'PROJETO FDS ULTIMO'
+          rm -f db.sqlite3
+          rm -f .env
+          cd ..
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+        run: |
+          cd 'PROJETO FDS ULTIMO'
+          zip release.zip ./* -r
+          cd ..
+          mv 'PROJETO FDS ULTIMO/release.zip' .
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -52,8 +61,8 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write # Required for requesting the JWT
+      contents: read  # Required for actions/checkout
 
     steps:
       - name: Download artifact from build job
@@ -64,7 +73,6 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -72,10 +80,9 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_9DF56186DE3340D5B34BD00E4AA8B012 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_DDEA8FD9B3B043B485C9FFCC414D7C63 }}
 
-      - name: 'Deploy to Azure Web App'
+      - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
           app-name: 'matchautos6'
           slot-name: 'Production'
-          

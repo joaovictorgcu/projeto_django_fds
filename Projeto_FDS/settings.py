@@ -5,6 +5,7 @@ Django settings for Projeto_FDS project.
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import dj_database_url  # necessário para conectar usando string única, se preferir
 
 # Caminho base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 if NOT_PROD:
     DEBUG = True
     SECRET_KEY = 'django-insecure-e6^unwj6@#b@hc66n$01d36p^!1nkw_t5xl#@dqr+nx*ozx+4r'
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'matchautos6-d2b9fva2c6avc6d8.brazilsouth-01.azurewebsites.net']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
@@ -30,8 +31,9 @@ if NOT_PROD:
 else:
     DEBUG = os.getenv('DEBUG', '0').lower() in ['true', 't', '1']
     SECRET_KEY = os.getenv('SECRET_KEY')
-    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split(' ')
-    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split(' ')
+
+    ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '').split()
+    CSRF_TRUSTED_ORIGINS = os.getenv('CSRF_TRUSTED_ORIGINS', '').split()
 
     SECURE_SSL_REDIRECT = os.getenv('SECURE_SSL_REDIRECT', '0').lower() in ['true', 't', '1']
     if SECURE_SSL_REDIRECT:
@@ -41,10 +43,13 @@ else:
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'NAME': os.environ.get('DBNAME'),
-            'HOST': os.environ.get('DBHOST'),
             'USER': os.environ.get('DBUSER'),
             'PASSWORD': os.environ.get('DBPASS'),
-            'OPTIONS': {'sslmode': 'require'},
+            'HOST': os.environ.get('DBHOST'),
+            'PORT': '5432',
+            'OPTIONS': {
+                'sslmode': 'require',
+            },
         }
     }
 
