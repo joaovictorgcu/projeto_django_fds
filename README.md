@@ -53,8 +53,8 @@ Descrição:
 Atualmente, o sistema exige que o usuário esteja logado para poder adicionar carros, favoritar anúncios ou comentar em publicações. No entanto, essa limitação não está prevista nos requisitos e impede a interação de usuários não autenticados com funcionalidades importantes da plataforma.
 
 Funcionalidades afetadas:
-	4.1	Adicionar um novo carro
-	4.2	Favoritar veículos
+	4.1 Adicionar um novo carro
+	4.2 Favoritar veículos
 	4.3 Comentar em anúncios
 
 # Contribuidores
