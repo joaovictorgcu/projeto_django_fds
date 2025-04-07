@@ -66,6 +66,9 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+      - name: 🔍 Debug folder structure
+        run: ls -R
+
       - name: Set environment variable for Django settings
         run: echo "DJANGO_SETTINGS_MODULE=matchautos.settings" >> $GITHUB_ENV
 
