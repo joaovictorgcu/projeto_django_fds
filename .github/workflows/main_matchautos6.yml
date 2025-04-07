@@ -18,6 +18,9 @@ jobs:
       - name: Set environment variable for Django settings
         run: echo "DJANGO_SETTINGS_MODULE=matchautos.settings" >> $GITHUB_ENV
 
+      - name: ✅ Set PYTHONPATH (para encontrar o módulo matchautos)
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+
       - name: Set up Python version
         uses: actions/setup-python@v5
         with:
@@ -72,8 +75,8 @@ jobs:
       - name: Set environment variable for Django settings
         run: echo "DJANGO_SETTINGS_MODULE=matchautos.settings" >> $GITHUB_ENV
 
-      - name: ✅ Set PYTHONPATH (pasta MATCHAUTOS contém manage.py)
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/MATCHAUTOS" >> $GITHUB_ENV
+      - name: ✅ Set PYTHONPATH (ajustado corretamente)
+        run: echo "PYTHONPATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
 
       - name: Login to Azure
         uses: azure/login@v2
