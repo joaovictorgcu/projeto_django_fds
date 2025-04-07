@@ -1,5 +1,5 @@
 """
-Django settings for Projeto_FDS project.
+Django settings for matchautos project.
 """
 
 import os
@@ -78,12 +78,12 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'Projeto_FDS.urls'
+ROOT_URLCONF = 'matchautos.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'Projeto_FDS/templates'],
+        'DIRS': [BASE_DIR / 'matchautos/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -96,7 +96,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'Projeto_FDS.wsgi.application'
+WSGI_APPLICATION = 'matchautos.wsgi.application'
 
 # Validação de senha
 AUTH_PASSWORD_VALIDATORS = [
