@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set environment variable for Django settings
-        run: echo "DJANGO_SETTINGS_MODULE=MATCHAUTOS.settings" >> $GITHUB_ENV
+        run: echo "DJANGO_SETTINGS_MODULE=matchautos.settings" >> $GITHUB_ENV
 
       - name: Set up Python version
         uses: actions/setup-python@v5
@@ -67,7 +67,7 @@ jobs:
         run: unzip release.zip
 
       - name: Set environment variable for Django settings
-        run: echo "DJANGO_SETTINGS_MODULE=MATCHAUTOS.settings" >> $GITHUB_ENV
+        run: echo "DJANGO_SETTINGS_MODULE=matchautos.settings" >> $GITHUB_ENV
 
       - name: Login to Azure
         uses: azure/login@v2
