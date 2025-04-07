@@ -27,9 +27,7 @@ A Match Auto é um site de compra e venda de carros pela internet. Você pode pr
 - *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
 
 - *Programação em Par:*
-Durante o desenvolvimento do projeto, a gente não seguiu exatamente o modelo de programação em par tradicional. Em vez de dois integrantes programando juntos ao mesmo tempo, decidimos nos organizar de uma forma que funcionasse melhor pra gente: fizemos tudo em conjunto, mas dividindo as tarefas para que cada um pudesse contribuir um pouco por vez.
-Nos reunimos, discutimos o que precisava ser feito, e aí cada pessoa ficou responsável por uma parte específica do projeto. Fomos trocando ideias e nos ajudando ao longo do processo, mas sem necessariamente estarmos lado a lado programando o tempo todo.
-Mesmo não usando a programação em par do jeito clássico, todo mundo participou e colaborou de forma ativa. Foi uma forma que encontramos de trabalhar em grupo de forma leve e eficiente, respeitando o tempo e o ritmo de cada um.
+Nosso grupo passou por um momento complicado com a saída de alguns integrantes, e isso nos obrigou a começar tudo do zero. Com o tempo apertado, fizemos uma chamada para trabalhar juntos no código, pesquisamos bastante e fomos corrigindo os erros ao longo do processo. Na última reunião, nos encontramos presencialmente para ajustar os últimos detalhes, resolver os problemas que ainda tinham e conseguir fazer o deploy na Azure.
 
 - *Bug tracker:*
 1. Campo de ano do carro aceita valores inválidos (ex: 1200)
