@@ -1,1 +1,2 @@
 web: gunicorn matchautos.wsgi --log-file -
+# nao sei o que esta acontecendo, pq nao esta rodando 
