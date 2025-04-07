@@ -21,7 +21,7 @@ NOT_PROD = not TARGET_ENV.lower().startswith('prod')
 if NOT_PROD:
     DEBUG = True
     SECRET_KEY = 'django-insecure-e6^unwj6@#b@hc66n$01d36p^!1nkw_t5xl#@dqr+nx*ozx+4r'
-    ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
+    ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'matchautos6-d2b9fva2c6avc6d8.brazilsouth-01.azurewebsites.net']
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
