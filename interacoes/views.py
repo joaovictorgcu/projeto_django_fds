@@ -37,7 +37,7 @@ def lista_favoritos(request):
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from .models import Comentario
-from cars.models import Car  # certifique-se que está importando o modelo certo
+from cars.models import Car,Brand  # certifique-se que está importando o modelo certo
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
@@ -71,7 +71,7 @@ def detalhes_carro(request, carro_id):
 
 @login_required
 def editar_carro_view(request, id):
-    carro = Car.objects.get(id=id, user=request.user)
+    carro = Car.objects.get(id=id, usuario=request.user)
 
     if request.method == "POST":
         carro.model = request.POST.get("model")
