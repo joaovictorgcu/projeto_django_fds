@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from cars.views import cars_view, new_car_view, index_view
 from accounts.views import register_view, login_view, logout_view
 from interacoes.views import meus_anuncios
+from MATCHAUTOS import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),

@@ -12,7 +12,7 @@ def detalhes_carro(request, carro_id):
     if request.user.is_authenticated:
         ja_favoritado = Favorito.objects.filter(usuario=request.user, carro=carro).exists()
 
-    return render(request, 'interacoes/detalhes_carro.html', {
+    return render(request, 'detalhes_carro.html', {
         'carro': carro,
         'ja_favoritado': ja_favoritado
     })
@@ -30,7 +30,7 @@ def favoritar_carro(request, carro_id):
 @login_required
 def lista_favoritos(request):
     favoritos = Favorito.objects.filter(usuario=request.user)
-    return render(request, 'interacoes/lista_favoritos.html', {'favoritos': favoritos})
+    return render(request, 'lista_favoritos.html', {'favoritos': favoritos})
 
 
 
@@ -67,7 +67,7 @@ def detalhes_carro(request, carro_id):
         'ja_favoritado': ja_favoritado,
         'comentarios': comentarios,
     }
-    return render(request, 'interacoes/detalhes_carro.html', context)
+    return render(request, 'detalhes_carro.html', context)
 
 @login_required
 def editar_carro_view(request, id):

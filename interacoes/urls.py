@@ -2,7 +2,8 @@ from django.urls import path
 from . import views
 from cars.views import index_view, cars_view, new_car_view, meus_anuncios
 from .views import editar_carro_view, deletar_carro_view
-
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('carro/<int:carro_id>/', views.detalhes_carro, name='detalhes_carro'),
@@ -16,3 +17,5 @@ urlpatterns = [
     path('deletar-carro/<int:id>/', deletar_carro_view, name='deletar_carro'),
 ]
 
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
