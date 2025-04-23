@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 {% load static %}
-{% load humanize %}
 
 {% block title %}Meus Anúncios{% endblock %}
 
@@ -36,6 +35,12 @@
       object-fit: cover;
     }
 
+    .car-card h3 {
+      font-size: 20px;
+      margin-top: 10px;
+      margin-bottom: 5px;
+    }
+
     .car-card h2 {
       font-size: 1.5rem;
       margin: 10px;
@@ -59,11 +64,11 @@
       font-weight: bold;
     }
 
-    .actions .btn-warning {
+    .car-card .actions .btn-warning {
       background: #f0ad4e;
     }
 
-    .actions .btn-danger {
+    .car-card .actions .btn-danger {
       background: #d9534f;
     }
 
@@ -74,7 +79,7 @@
     }
   </style>
 
-  <h2 style="text-align:center;margin-top:20px;">Meus Anúncios</h2>
+  <h2 style="text-align: center; margin-top: 20px;">Meus Anúncios</h2>
 
   <div class="car-grid">
     {% if carros %}
@@ -83,29 +88,10 @@
           {% if carro.photo %}
             <img src="{{ carro.photo.url }}" alt="{{ carro.model }}">
           {% else %}
-            <img src="{% static 'img/sem_foto.jpg' %}" alt="Sem foto">
+            <p>Foto não disponível.</p>
           {% endif %}
-
-          <h2>{{ carro.brand.nome }} {{ carro.model }}</h2>
-          <p>
-            {{ carro.factory_year }} •
-            R$ {{ carro.value|floatformat:2|intcomma }} •
-            {{ carro.km|intcomma }} km
-          </p>
-
+          <h2>{{ carro.brand }} {{ carro.model }}</h2>
+          <p>{{ carro.factory_year }} - R$ {{ carro.value }} - {{ carro.km }}km</p>
           <div class="actions">
             <a href="{% url 'editar_carro' carro.id %}" class="btn btn-warning">Editar</a>
-            <a href="{% url 'deletar_carro' carro.id %}" class="btn btn-danger"
-               onclick="return confirm('Tem certeza de que deseja excluir este anúncio?');">
-               Excluir
-            </a>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      <p style="grid-column:1/-1;text-align:center;">
-        Você ainda não cadastrou nenhum carro.
-      </p>
-    {% endif %}
-  </div>
-{% endblock %}
+            <a href="{% url 'deletar_carro' carro.id %}" class="btn btn-danger" onclick="return

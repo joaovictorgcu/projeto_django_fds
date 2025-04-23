@@ -64,7 +64,8 @@ INSTALLED_APPS = [
     'cars',
     'accounts',
     'interacoes',
-    'whitenoise.runserver_nostatic',  # Whitenoise no modo dev
+    'whitenoise.runserver_nostatic', 
+    'django.contrib.humanize', # Whitenoise no modo dev
 ]
 
 MIDDLEWARE = [
