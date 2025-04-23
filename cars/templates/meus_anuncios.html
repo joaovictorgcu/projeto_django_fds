@@ -55,13 +55,20 @@
     }
 
     .carro-item {
-      background-color: #f9f9f9;
+      background-color: #e3e1e1; /* Fundo cinza para cada carro */
       margin-bottom: 20px;
       border-radius: 12px;
       padding: 20px;
       display: flex;
       align-items: center;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .carro-item:hover {
+      cursor: pointer;
+      transform: translateY(-5px); /* Efeito de "subir" o cartão */
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2); /* Aumento da sombra */
     }
 
     .carro-img-container {
@@ -89,25 +96,32 @@
 
     .editar-btn, .deletar-btn {
       display: inline-block;
-      background-color: #2d6a4f;
-      color: white;
       padding: 8px 16px;
       border-radius: 8px;
-      text-decoration: none;
       margin-top: 10px;
+      text-decoration: none;
+      color: white;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .editar-btn:hover, .deletar-btn:hover {
-      background-color: #1f4f38;
+    .editar-btn {
+      background-color: #4CAF50; /* Verde mais bonito */
+    }
+
+    .editar-btn:hover {
+      background-color: #45a049;
+      transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
     }
 
     .deletar-btn {
-      background-color: #d62828;
-      margin-top: 0;
+      background-color: #f44336; /* Vermelho chamativo */
     }
 
     .deletar-btn:hover {
-      background-color: #a4161a;
+      background-color: #e53935;
+      transform: scale(1.05); /* Efeito de aumento ao passar o mouse */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra */
     }
   </style>
 

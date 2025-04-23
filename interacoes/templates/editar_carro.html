@@ -4,10 +4,10 @@
 {% block title %}Editar Carro{% endblock %}
 
 {% block content %}
-  <h2 style="text-align: center; margin-top: 20px;">Editar Carro</h2>
-  <form method="post" enctype="multipart/form-data" style="max-width: 500px; margin: 0 auto; background: #e3e1e1; padding: 30px; border-radius: 10px;">
+  <h2 class="page-title">Editar Carro</h2>
+  <form method="post" enctype="multipart/form-data" class="car-form">
     {% csrf_token %}
-    <div style="margin-bottom: 18px;">
+    <div class="form-group">
       <label for="brand">Marca:</label>
       <select name="brand" id="brand" required>
         {% for brand in brands %}
@@ -15,36 +15,151 @@
         {% endfor %}
       </select>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="model">Modelo:</label>
       <input type="text" name="model" id="model" value="{{ carro.model }}" required>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="factory_year">Ano de Fabricação:</label>
       <input type="number" name="factory_year" id="factory_year" value="{{ carro.factory_year }}" required>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="model_year">Ano do Modelo:</label>
       <input type="number" name="model_year" id="model_year" value="{{ carro.model_year }}" required>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="km">KM:</label>
       <input type="number" name="km" id="km" value="{{ carro.km }}" required>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="value">Valor:</label>
       <input type="number" name="value" id="value" value="{{ carro.value }}" required>
     </div>
-    <div style="margin-bottom: 18px;">
+
+    <div class="form-group">
       <label for="photo">Foto:</label>
       <input type="file" name="photo" id="photo">
       {% if carro.photo %}
-        <div style="margin-top:7px;">
-          <img src="{{ carro.photo.url }}" alt="{{ carro.model }}" style="width: 200px; border-radius: 8px;">
+        <div class="photo-preview">
+          <img src="{{ carro.photo.url }}" alt="{{ carro.model }}" class="photo-img">
         </div>
       {% endif %}
     </div>
-    <button type="submit" class="btn btn-success">Salvar</button>
-    <a href="{% url 'meus_anuncios' %}" class="btn btn-secondary">Cancelar</a>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-save">Salvar</button>
+      <a href="{% url 'meus_anuncios' %}" class="btn btn-cancel">Cancelar</a>
+    </div>
   </form>
+
+  <style>
+    .page-title {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 2rem;
+      color: #333;
+    }
+
+    .car-form {
+      max-width: 600px;
+      margin: 40px auto;
+      background-color: #e3e1e1;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      font-weight: bold;
+      margin-bottom: 8px;
+      display: block;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 1rem;
+      color: #333;
+      box-sizing: border-box;
+    }
+
+    .form-group input[type="file"] {
+      padding: 6px 12px;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: #4CAF50;
+      outline: none;
+    }
+
+    .photo-preview {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .photo-img {
+      max-width: 200px;
+      border-radius: 8px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      text-decoration: none;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+    }
+
+    .btn-save {
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .btn-save:hover {
+      background-color: #45a049;
+    }
+
+    .btn-cancel {
+      background-color: #f44336;
+      color: white;
+    }
+
+    .btn-cancel:hover {
+      background-color: #e53935;
+    }
+
+    @media (max-width: 768px) {
+      .car-form {
+        padding: 20px;
+      }
+
+      .btn {
+        width: 48%;
+        font-size: 0.9rem;
+      }
+    }
+  </style>
+
 {% endblock %}
