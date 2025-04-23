@@ -1,24 +1,107 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
 {% block title %}Novo Carro{% endblock %}
+
 {% block content %}
-  <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
-    <h2 style="text-align: center;">Cadastrar Novo Carro</h2>
-    <form method="POST" enctype="multipart/form-data" style="display: flex; flex-direction: column; gap: 15px;">
+  <div class="form-container">
+    <h2 class="form-title">Cadastrar Novo Carro</h2>
+    <form method="POST" enctype="multipart/form-data" class="car-form">
       {% csrf_token %}
-      <input type="text" name="model" placeholder="Modelo" required>
-      <select name="brand" required>
-        <option value="">Marca</option>
-        {% for brand in brands %}
-          <option value="{{ brand.id }}">{{ brand.name }}</option>
-        {% endfor %}
-      </select>
-      <input type="number" name="factory_year" placeholder="Ano de Fabricação">
-      <input type="number" name="model_year" placeholder="Ano do Modelo">
-      <input type="text" name="km" placeholder="Quilometragem">
-      <input type="number" step="0.01" name="value" placeholder="Valor">
-      <input type="file" name="photo">
-      <button type="submit" style="width: 100%; padding: 10px; background-color: #222; color: #fff; border: none; border-radius: 5px; cursor: pointer;">
-        Registrar</button>
+      <div class="form-group">
+        <input type="text" name="model" placeholder="Modelo" required class="form-input">
+      </div>
+      <div class="form-group">
+        <select name="brand" required class="form-input">
+          <option value="">Marca</option>
+          {% for brand in brands %}
+            <option value="{{ brand.id }}">{{ brand.name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="number" name="factory_year" placeholder="Ano de Fabricação" class="form-input">
+      </div>
+      <div class="form-group">
+        <input type="number" name="model_year" placeholder="Ano do Modelo" class="form-input">
+      </div>
+      <div class="form-group">
+        <input type="text" name="km" placeholder="Quilometragem" class="form-input">
+      </div>
+      <div class="form-group">
+        <input type="number" step="0.01" name="value" placeholder="Valor" class="form-input">
+      </div>
+      <div class="form-group">
+        <input type="file" name="photo" class="form-input">
+      </div>
+      <button type="submit" class="btn-submit">Registrar</button>
     </form>
   </div>
+
+  <style>
+    .form-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #f8f8f8;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-title {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .car-form {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-input {
+      padding: 12px;
+      font-size: 1rem;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background-color: #fff;
+      margin-top: 8px;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .btn-submit {
+      padding: 12px;
+      background-color: #222;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s;
+    }
+
+    .btn-submit:hover {
+      background-color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .form-container {
+        padding: 20px;
+      }
+
+      .btn-submit {
+        padding: 10px;
+      }
+    }
+  </style>
 {% endblock %}
