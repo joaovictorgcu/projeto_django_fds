@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 
 from cars.views import cars_view, new_car_view, index_view
 from accounts.views import register_view, login_view, logout_view
-from interacoes import views
+from interacoes.views import meus_anuncios
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,7 +18,10 @@ urlpatterns = [
     path('login/', login_view, name='login'),
     path('index/', index_view, name='index'),
     path('interacoes/', include('interacoes.urls')),
+    path('meus-anuncios/', meus_anuncios, name='meus_anuncios'),
 ]
+
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

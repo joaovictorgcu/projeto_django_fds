@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Meus Anúncios</h2>
+<div class="carros-lista">
+    {% for carro in carros %}
+        <div class="carro-item">
+            <h3>{{ carro.marca }} {{ carro.modelo }}</h3>
+            <p>Preço: R$ {{ carro.preco }}</p>
+            <a href="{% url 'editar_carro' carro.id %}" class="btn btn-warning">Editar</a>
+            <a href="{% url 'deletar_carro' carro.id %}" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este anúncio?')">Excluir</a>
+        </div>
+    {% empty %}
+        <p>Você ainda não anunciou nenhum carro.</p>
+    {% endfor %}
+</div>
+{% endblock %}

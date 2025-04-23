@@ -19,6 +19,7 @@ class Car(models.Model):
     value = models.FloatField(blank = True, null = True)
     photo = models.ImageField(upload_to='cars/', blank = True, null = True)
     favoritos = models.ManyToManyField(User, related_name='carros_favoritos', blank=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE)
     
 
     def __str__(self):

@@ -69,3 +69,39 @@ def detalhes_carro(request, carro_id):
     }
     return render(request, 'interacoes/detalhes_carro.html', context)
 
+@login_required
+def editar_carro_view(request, id):
+    carro = Car.objects.get(id=id, user=request.user)
+
+    if request.method == "POST":
+        carro.model = request.POST.get("model")
+        brand_id = request.POST.get("brand")
+        carro.brand = Brand.objects.get(id=brand_id)
+        carro.factory_year = request.POST.get("factory_year")
+        carro.model_year = request.POST.get("model_year")
+        carro.km = request.POST.get("km")
+        carro.value = request.POST.get("value")
+        
+        if request.FILES.get("photo"):
+            carro.photo = request.FILES.get("photo")
+
+        carro.save()
+        return redirect("meus_anuncios")
+
+    brands = Brand.objects.all()
+    return render(request, 'editar_carro.html', {'carro': carro, 'brands': brands})
+
+@login_required
+def deletar_carro_view(request, id):
+    carro = Car.objects.get(id=id, usuario=request.user)
+    carro.delete()
+    return redirect("meus_anuncios")
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from cars.models import Car
+
+@login_required
+def meus_anuncios(request):
+    carros = Car.objects.filter(usuario=request.user) 
+    return render(request, 'meus_anuncios.html', {'carros': carros})

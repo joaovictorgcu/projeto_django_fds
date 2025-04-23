@@ -1,27 +1,29 @@
 from django.shortcuts import render, redirect
 from cars.models import Car, Brand
-from interacoes.models import Favorito  # importa o modelo de favoritos
+from interacoes.models import Favorito
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def cars_view(request): 
     cars = Car.objects.all().order_by('model')
     search = request.GET.get('search')
     
     if search:
-        cars = cars.filter(model__icontains=search).order_by('model')
+        cars = cars.filter(model__icontains=search)
 
     favoritos_ids = []
     if request.user.is_authenticated:
         favoritos_ids = list(
-            Favorito.objects.filter(usuario=request.user).values_list('carro__id', flat=True)
+            Favorito.objects.filter(usuario=request.user).values_list('carro_id', flat=True)
         )
 
     return render(
         request, 
         'cars.html',
-        {'cars': cars, 'favoritos_ids': favoritos_ids}
+        {'cars': cars.order_by('model'), 'favoritos_ids': favoritos_ids}
     )
 
-
+@login_required
 def new_car_view(request):
     if request.method == "POST":
         model = request.POST.get("model")
@@ -32,7 +34,15 @@ def new_car_view(request):
         value = request.POST.get("value")
         photo = request.FILES.get("photo")
 
-        brand = Brand.objects.get(id=brand_id)
+        if not all([model, brand_id, factory_year, model_year, km, value, photo]):
+            messages.error(request, "Todos os campos são obrigatórios.")
+            return redirect("new_car")
+
+        try:
+            brand = Brand.objects.get(id=brand_id)
+        except Brand.DoesNotExist:
+            messages.error(request, "Marca inválida.")
+            return redirect("new_car")
 
         Car.objects.create(
             model=model,
@@ -41,9 +51,11 @@ def new_car_view(request):
             model_year=model_year,
             km=km,
             value=value,
-            photo=photo
+            photo=photo,
+            usuario=request.user  # <-- campo correto!
         )
 
+        messages.success(request, "Carro cadastrado com sucesso!")
         return redirect("cars_list")
     
     brands = Brand.objects.all()
@@ -51,3 +63,8 @@ def new_car_view(request):
 
 def index_view(request):
     return render(request, 'index.html')
+
+@login_required
+def meus_anuncios(request):
+    carros = Car.objects.filter(usuario=request.user).order_by('-factory_year', '-model_year')  # <-- campo correto!
+    return render(request, 'meus_anuncios.html', {'carros': carros})
