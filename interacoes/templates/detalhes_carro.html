@@ -24,18 +24,21 @@
            {% if ja_favoritado %}💔 Remover dos Favoritos{% else %}❤️ Adicionar aos Favoritos{% endif %}
         </a>
 
-        {# --- formulário de avaliação (inline) --- #}
-        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
-          {% csrf_token %}
-          <label for="score" class="text-sm font-bold">Avalie:</label>  <!-- "Avalie" em negrito -->
-          <select name="score" id="score" class="border rounded p-1">
-            {% for i in "012345" %}
-              <option value="{{ i }}">{{ i }}</option>
-            {% endfor %}
-          </select>
-          <button type="submit" class="bg-blue-600 text-white px-2 py-1 rounded">Enviar</button>
-        </form>
-        
+       {# --- formulário de avaliação (inline) --- #}
+       <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
+        {% csrf_token %}
+        <label for="score" class="text-sm font-bold"><strong>Avalie:</strong></label>
+        <select name="score" id="score" class="border rounded p-1">
+          {% for i in "012345" %}
+            <option value="{{ i }}">{{ i }}</option>
+          {% endfor %}
+        </select>
+
+        {# botão agora tem classe .avaliar-btn #}
+        <button type="submit" class="avaliar-btn">
+          ⭐ Enviar
+        </button>
+      </form>
         {# --- Exibir média ao lado do botão de envio --- #}
         <p class="media-avaliacao mt-2">
           Média: <strong>{{ carro.rating }}</strong> / 5 ({{ carro.ratings.count }} votos)
@@ -168,5 +171,48 @@
       font-size: 14px;
       margin-top: 20px;
     }
+    {# ...cabeçalho igual #}
+
+        {# --- formulário de avaliação (inline) --- #}
+        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <label for="score" class="text-sm font-bold">Avalie:</label>
+          <select name="score" id="score" class="border rounded p-1">
+            {% for i in "012345" %}
+              <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+
+          {# botão agora tem classe .avaliar-btn #}
+          <button type="submit" class="avaliar-btn">
+            ⭐ Enviar
+          </button>
+        </form>
+
+{# ...restante do template igual #}
+
+  <style>
+    /* ---- botão de avaliação mais bonito ---- */
+    .avaliar-btn{
+      background: linear-gradient(135deg,#2563eb,#3b82f6);
+      color:#fff;
+      padding:8px 18px;
+      border:none;
+      border-radius:8px;
+      font-weight:600;
+      transition:transform .2s,box-shadow .2s;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+    .avaliar-btn:hover{
+      box-shadow:0 4px 12px rgba(0,0,0,.25);
+      transform:translateY(-2px);
+    }
+    .avaliar-btn:active{
+      transform:translateY(0);
+      box-shadow:0 2px 6px rgba(0,0,0,.2);
+    }
+
   </style>
 {% endblock %}
