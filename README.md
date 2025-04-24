@@ -20,7 +20,7 @@ A Match Auto é um site de compra e venda de carros pela internet. Você pode pr
 - *Figma:* https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1
 
 # Entrega 2️⃣:
-- *Site:* https://matchautos6-d2b9fva2c6avc6d8.brazilsouth-01.azurewebsites.net/index/
+- *Site:* https://match1autos.azurewebsites.net/
 
 - *Screencast:* https://www.youtube.com/watch?v=qDFVNQ_2Y34
 
