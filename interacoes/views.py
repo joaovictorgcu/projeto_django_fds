@@ -4,6 +4,12 @@ from cars.models import Car
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comentario
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render
+from django.contrib import messages
+from cars.models import Car, CarRating
+from django.contrib.auth.decorators import login_required
+from django.db.models import Avg
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
@@ -97,11 +103,47 @@ def deletar_carro_view(request, id):
     carro.delete()
     return redirect("meus_anuncios")
 
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
-from cars.models import Car
-
 @login_required
 def meus_anuncios(request):
     carros = Car.objects.filter(usuario=request.user) 
     return render(request, 'meus_anuncios.html', {'carros': carros})
+
+@login_required
+def rate_car(request, car_id):
+    car = get_object_or_404(Car, id=car_id)
+    try:
+        score = int(request.POST.get("score", 0))
+        if score not in range(0, 6):
+            raise ValueError
+    except ValueError:
+        messages.error(request, "Nota inválida.")
+        return redirect("detalhes_carro", car_id)
+
+    rating, created = CarRating.objects.update_or_create(
+        car=car, user=request.user, defaults={"score": score}
+    )
+
+    # recalcular média rapidamente
+    avg = car.ratings.aggregate(avg=Avg("score"))["avg"] or 0
+    car.rating = round(avg, 1)
+    car.save(update_fields=["rating"])
+
+    messages.success(request, "Avaliação registrada com sucesso!")
+    return redirect("detalhes_carro", car_id)
+
+@login_required
+def toggle_favorito(request, car_id):
+    carro = get_object_or_404(Car, id=car_id)
+
+    fav, criado = Favorito.objects.get_or_create(
+        carro=carro,
+        usuario=request.user
+    )
+
+    if criado:
+        messages.success(request, "Carro adicionado aos favoritos.")
+    else:
+        fav.delete()
+        messages.info(request, "Carro removido dos favoritos.")
+
+    return redirect(request.META.get("HTTP_REFERER", "carros"))

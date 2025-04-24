@@ -20,7 +20,19 @@ class Car(models.Model):
     photo = models.ImageField(upload_to='cars/', blank = True, null = True)
     favoritos = models.ManyToManyField(User, related_name='carros_favoritos', blank=True)
     usuario = models.ForeignKey(User, on_delete=models.CASCADE)
+    rating = models.DecimalField(max_digits=2, decimal_places=1, default=0)
     
 
     def __str__(self):
         return self.model
+
+
+class CarRating(models.Model):
+    """Avaliação individual (1 registro por usuário‑carro)."""
+    car   = models.ForeignKey(Car, related_name="ratings", on_delete=models.CASCADE)
+    user  = models.ForeignKey(User, related_name="car_ratings", on_delete=models.CASCADE)
+    score = models.PositiveSmallIntegerField(choices=[(i, i) for i in range(6)])  # 0–5
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("car", "user")      # 1 voto por usuário

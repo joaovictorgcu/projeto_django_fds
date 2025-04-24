@@ -8,6 +8,7 @@
     {% if carro.photo %}
       <img src="{{ carro.photo.url }}" alt="{{ carro.model }}" class="car-img">
     {% endif %}
+
     <h1 style="margin-top: 20px;">{{ carro.model }}</h1>
     <p><strong>Marca:</strong> {{ carro.brand.name }}</p>
     <p><strong>Ano de Fabricação:</strong> {{ carro.factory_year }}</p>
@@ -16,15 +17,36 @@
     <p><strong>Valor:</strong> R$ {{ carro.value|floatformat:2 }}</p>
 
     {% if user.is_authenticated %}
-      {% if ja_favoritado %}
-        <div class="ja-favoritado-btn">✅ Você já favoritou este carro</div>
-      {% else %}
-        <a href="{% url 'favoritar_carro' carro.id %}" class="favorito-btn">❤️ Adicionar aos Favoritos</a>
-      {% endif %}
+      <div class="mt-4 flex items-center justify-center gap-4 flex-wrap">
+        {# --- botão de favorito / desfavorito --- #}
+        <a href="{% url 'toggle_favorito' carro.id %}"
+           class="{% if ja_favoritado %}ja-favoritado-btn{% else %}favorito-btn{% endif %}">
+           {% if ja_favoritado %}💔 Remover dos Favoritos{% else %}❤️ Adicionar aos Favoritos{% endif %}
+        </a>
+
+        {# --- formulário de avaliação (inline) --- #}
+        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <label for="score" class="text-sm font-bold">Avalie:</label>  <!-- "Avalie" em negrito -->
+          <select name="score" id="score" class="border rounded p-1">
+            {% for i in "012345" %}
+              <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="bg-blue-600 text-white px-2 py-1 rounded">Enviar</button>
+        </form>
+        
+        {# --- Exibir média ao lado do botão de envio --- #}
+        <p class="media-avaliacao mt-2">
+          Média: <strong>{{ carro.rating }}</strong> / 5 ({{ carro.ratings.count }} votos)
+        </p>
+      </div>
+    {% else %}
+      <p class="text-sm italic mt-4">Entre para favoritar ou avaliar este carro.</p>
     {% endif %}
   </div>
 
-  <!-- COMENTÁRIOS -->
+  {# ---------- COMENTÁRIOS ---------- #}
   <div class="comentarios-container">
     <h3>Comentários</h3>
 
@@ -41,7 +63,8 @@
     <ul class="comentarios-lista" id="comentarios-lista">
       {% for comentario in comentarios %}
         <li>
-          <strong>{{ comentario.autor.username }}</strong> em {{ comentario.criado_em|date:"d/m/Y H:i" }}<br>
+          <strong>{{ comentario.autor.username }}</strong>
+          em {{ comentario.criado_em|date:"d/m/Y H:i" }}<br>
           {{ comentario.texto }}
         </li>
       {% empty %}
@@ -52,30 +75,24 @@
 
   <script>
     const form = document.getElementById('comentario-form');
-
     if (form) {
-      form.addEventListener('submit', async function(e) {
+      form.addEventListener('submit', async e => {
         e.preventDefault();
-
-        const formData = new FormData(form);
-        const response = await fetch("", {
+        const fd = new FormData(form);
+        const resp = await fetch("", {
           method: "POST",
-          headers: {
-            'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
-          },
-          body: formData,
+          headers: { 'X-CSRFToken': fd.get('csrfmiddlewaretoken') },
+          body: fd,
         });
-
-        if (response.ok) {
-          const data = await response.json();
-
+        if (resp.ok) {
+          const data = await resp.json();
           const lista = document.getElementById('comentarios-lista');
-          const novo = document.createElement('li');
-          novo.innerHTML = `<strong>${data.autor}</strong> em ${data.data}<br>${data.texto}`;
-          lista.prepend(novo);
+          const li = document.createElement('li');
+          li.innerHTML = `<strong>${data.autor}</strong> em ${data.data}<br>${data.texto}`;
+          lista.prepend(li);
           form.reset();
         } else {
-          alert('Erro ao enviar comentário.');
+          alert("Erro ao enviar comentário.");
         }
       });
     }
@@ -91,88 +108,65 @@
       margin: 0 auto;
       text-align: center;
     }
-
     .car-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      object-fit: cover;
-      max-height: 500px;
+      max-width: 100%; height: auto; border-radius: 12px;
+      margin-bottom: 20px; object-fit: cover; max-height: 500px;
     }
-
     .favorito-btn {
-      margin-top: 20px;
-      display: inline-block;
-      background-color: #d62828;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      text-decoration: none;
+      background-color: #d62828; color: #fff; padding: 10px 18px;
+      border-radius: 8px; text-decoration: none;
     }
-
-    .favorito-btn:hover {
-      background-color: #a4161a;
-    }
+    .favorito-btn:hover { background-color: #a4161a; }
 
     .ja-favoritado-btn {
-      margin-top: 20px;
-      display: inline-block;
-      background-color: #2d6a4f;
-      color: white;
-      padding: 10px 18px;
-      border-radius: 8px;
-      font-weight: bold;
-      opacity: 0.9;
-      cursor: default;
+      background-color: #2d6a4f; color: #fff; padding: 10px 18px;
+      border-radius: 8px; font-weight: bold; opacity: .9; cursor: pointer;
+      text-decoration: none;
     }
+    .ja-favoritado-btn:hover { opacity: 1; }
 
     .comentarios-container {
-      max-width: 700px;
-      margin: 40px auto 0;
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 12px;
+      max-width: 700px; margin: 40px auto 0; background: #fff;
+      padding: 20px 30px; border-radius: 12px;
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
     }
-
-    .comentarios-container h3 {
-      margin-bottom: 16px;
-    }
-
     .comentario-form textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      resize: none;
-      margin-bottom: 10px;
+      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;
+      resize: none; margin-bottom: 10px;
     }
-
     .comentario-form button {
-      background-color: #d62828;
-      color: white;
-      padding: 10px 16px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
+      background-color: #d62828; color: #fff; padding: 10px 16px;
+      border: none; border-radius: 8px; cursor: pointer;
+    }
+    .comentario-form button:hover { background-color: #a4161a; }
+
+    .comentarios-lista { list-style: none; padding: 0; margin-top: 20px; }
+    .comentarios-lista li {
+      background: #f2f2f2; padding: 12px; border-radius: 8px; margin-bottom: 12px;
     }
 
-    .comentario-form button:hover {
-      background-color: #a4161a;
+    /* Ajuste para alinhar corretamente os botões e formulários */
+    .car-container .flex {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px; /* Espaçamento entre os elementos */
+      flex-wrap: wrap; /* Permite quebrar para nova linha se necessário */
     }
 
-    .comentarios-lista {
-      list-style: none;
-      padding: 0;
+    .car-container .favorito-btn, .car-container .ja-favoritado-btn {
+      margin-top: 20px;
+      display: inline-block;
+    }
+
+    .car-container form {
+      display: inline-block; /* Faz o formulário ficar ao lado do botão */
       margin-top: 20px;
     }
 
-    .comentarios-lista li {
-      background: #f2f2f2;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 12px;
+    .media-avaliacao {
+      font-size: 14px;
+      margin-top: 20px;
     }
   </style>
 {% endblock %}

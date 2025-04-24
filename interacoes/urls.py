@@ -15,6 +15,8 @@ urlpatterns = [
     path('meus-anuncios/', meus_anuncios, name='meus_anuncios'),
     path('editar-carro/<int:id>/', editar_carro_view, name='editar_carro'),
     path('deletar-carro/<int:id>/', deletar_carro_view, name='deletar_carro'),
+    path("toggle-favorito/<int:car_id>/", views.toggle_favorito, name="toggle_favorito"),
+    path("rate-car/<int:car_id>/", views.rate_car, name="rate_car"),
 ]
 
 if settings.DEBUG:
