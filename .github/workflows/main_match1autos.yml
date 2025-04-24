@@ -1,9 +1,9 @@
 # .github/workflows/deploy-azure.yml
-name: Build & Deploy Python app to Azure Web App – matchautos
+name: Build & Deploy Python app to Azure Web App – matchautos
 
 on:
   push:
-    branches: [ main ]        # branch “produção”
+    branches: [ main ]
   workflow_dispatch:
 
 jobs:
@@ -13,36 +13,41 @@ jobs:
       contents: read
 
     steps:
+      # 0. Checkout
       - uses: actions/checkout@v4
 
-      - name: Set up Python (Azure App Service suporta ≤ 3.12)
+      # 1. Setup Python (versão igual à do Web App)
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # 1️⃣ Instala dependências dentro de MATCHAUTOS/
-      - name: Install dependencies
-        run: pip install -r MATCHAUTOS/requirements.txt
-
-      # 2️⃣ Remove arquivos que atrapalham o deploy
-      - name: Cleaning testing files
+      # 2. Instalar dependências (requirements.txt fica na raiz do repo)
+      - name: Install deps
         run: |
-          cd MATCHAUTOS/
-          rm -f db.sqlite3 .env || true    # ignora se não existirem
-          cd ..
+          pip install -r requirements.txt
+          pip install gunicorn  # garante que o entry‑point exista
 
-      # (Opcional) rode seus testes aqui
-
-      # 3️⃣ Compacta somente o diretório do projeto
-      - name: Zip artifact for deployment
+      # 3. Collect static → cria pasta staticfiles/
+      - name: Django collectstatic
         run: |
-          cd MATCHAUTOS/
-          zip -r release.zip ./*
-          cd ..
-          mv MATCHAUTOS/release.zip .
+          python manage.py collectstatic --noinput
 
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
+      # 4. Copiar MEDIA (se existir) para dentro do pacote
+      - name: Include media folder
+        run: |
+          if [ -d media ]; then
+            echo "Copying media/ into package…"
+          else
+            mkdir media
+          fi
+
+      # 5. Empacotar TUDO que o Azure precisa: código + static + media
+      - name: Zip artifact
+        run: |
+          zip -r release.zip . -x '.git/*'
+
+      - uses: actions/upload-artifact@v4
         with:
           name: python-app
           path: release.zip
@@ -58,23 +63,26 @@ jobs:
       contents: read
 
     steps:
+      # 6. Baixar artefato
       - uses: actions/download-artifact@v4
         with:
           name: python-app
 
-      - run: unzip release.zip
+      - run: unzip -q release.zip
 
-      - name: Azure login
+      # 7. Login Azure
+      - name: Azure login
         uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
+      # 8. Deploy
       - name: Deploy to Azure Web App
         id: deploy
         uses: azure/webapps-deploy@v3
         with:
-          app-name: "matchautos6"           # Web App criado na Azure
-          slot-name: "Production"
-          package: .                        # diretório raiz já contém o zip extraído
+          app-name: matchautos6
+          slot-name: Production
+          package: .
