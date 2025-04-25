@@ -3,7 +3,7 @@ from interacoes.models import Favorito
 from cars.models import Car
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Comentario
+from .models import Comentario, Mensagem
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib import messages
@@ -147,3 +147,29 @@ def toggle_favorito(request, car_id):
         messages.info(request, "Carro removido dos favoritos.")
 
     return redirect(request.META.get("HTTP_REFERER", "carros"))
+
+@login_required
+def enviar_mensagem(request, carro_id):
+    if request.method == 'POST':
+        carro = get_object_or_404(Car, id=carro_id)
+        conteudo = request.POST.get('conteudo')
+
+        # Evita que o vendedor envie mensagem para si mesmo
+        if carro.usuario == request.user:
+            return redirect('detalhes_carro', carro_id=carro_id)
+
+        Mensagem.objects.create(
+            remetente=request.user,
+            destinatario=carro.usuario,
+            carro=carro,
+            conteudo=conteudo
+        )
+
+        # Redireciona com uma mensagem de sucesso (se desejar usar messages)
+        return redirect('detalhes_carro', carro_id=carro_id)
+    
+
+@login_required
+def minhas_mensagens(request):
+    mensagens = Mensagem.objects.filter(destinatario=request.user).order_by("-data_envio")
+    return render(request, "minhas_mensagens.html", {"mensagens": mensagens})

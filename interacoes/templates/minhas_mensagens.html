@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Minhas Mensagens{% endblock %}
+
+{% block content %}
+  <div class="mensagens-container">
+    <h1>Minhas Mensagens</h1>
+    {% if mensagens %}
+      <ul class="mensagens-lista">
+        {% for mensagem in mensagens %}
+          <li>
+            <strong>De:</strong> {{ mensagem.remetente.username }}<br>
+            <strong>Carro:</strong> <a href="{% url 'detalhes_carro' mensagem.carro.id %}">{{ mensagem.carro.model }}</a><br>
+            <strong>Mensagem:</strong><br> {{ mensagem.conteudo }}<br>
+            <span class="mensagem-data">{{ mensagem.data_envio|date:"d/m/Y H:i" }}</span>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>Você ainda não recebeu nenhuma mensagem.</p>
+    {% endif %}
+  </div>
+
+  <style>
+    .mensagens-container {
+      max-width: 700px;
+      margin: 40px auto;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    }
+    .mensagens-lista {
+      list-style: none;
+      padding: 0;
+    }
+    .mensagens-lista li {
+      background: #f9f9f9;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 12px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .mensagem-data {
+      display: block;
+      font-size: 12px;
+      color: #777;
+      margin-top: 8px;
+    }
+  </style>
+{% endblock %}

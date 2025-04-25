@@ -24,25 +24,38 @@
            {% if ja_favoritado %}💔 Remover dos Favoritos{% else %}❤️ Adicionar aos Favoritos{% endif %}
         </a>
 
-       {# --- formulário de avaliação (inline) --- #}
-       <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
-        {% csrf_token %}
-        <label for="score" class="text-sm font-bold"><strong>Avalie:</strong></label>
-        <select name="score" id="score" class="border rounded p-1">
-          {% for i in "012345" %}
-            <option value="{{ i }}">{{ i }}</option>
-          {% endfor %}
-        </select>
+        {# --- formulário de avaliação --- #}
+        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
+          {% csrf_token %}
+          <label for="score" class="text-sm font-bold"><strong>Avalie:</strong></label>
+          <select name="score" id="score" class="border rounded p-1">
+            {% for i in "012345" %}
+              <option value="{{ i }}">{{ i }}</option>
+            {% endfor %}
+          </select>
 
-        {# botão agora tem classe .avaliar-btn #}
-        <button type="submit" class="avaliar-btn">
-          ⭐ Enviar
-        </button>
-      </form>
-        {# --- Exibir média ao lado do botão de envio --- #}
+          {# botão de avaliação --- #}
+          <button type="submit" class="avaliar-btn">
+            ⭐ Enviar
+          </button>
+        </form>
+
+        {# Exibir média de avaliação --- #}
         <p class="media-avaliacao mt-2">
           Média: <strong>{{ carro.rating }}</strong> / 5 ({{ carro.ratings.count }} votos)
         </p>
+
+        {# Enviar mensagem ao vendedor --- #}
+        {% if user.is_authenticated and user != carro.usuario %}
+          <div class="mensagem-container">
+            <h3>Enviar mensagem ao vendedor</h3>
+            <form method="post" action="{% url 'enviar_mensagem' carro.id %}" class="mensagem-form">
+              {% csrf_token %}
+              <textarea name="conteudo" rows="3" placeholder="Escreva sua mensagem..." required></textarea>
+              <button type="submit" class="mensagem-btn">Enviar mensagem</button>
+            </form>
+          </div>
+        {% endif %}
       </div>
     {% else %}
       <p class="text-sm italic mt-4">Entre para favoritar ou avaliar este carro.</p>
@@ -148,13 +161,12 @@
       background: #f2f2f2; padding: 12px; border-radius: 8px; margin-bottom: 12px;
     }
 
-    /* Ajuste para alinhar corretamente os botões e formulários */
     .car-container .flex {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 15px; /* Espaçamento entre os elementos */
-      flex-wrap: wrap; /* Permite quebrar para nova linha se necessário */
+      gap: 15px;
+      flex-wrap: wrap;
     }
 
     .car-container .favorito-btn, .car-container .ja-favoritado-btn {
@@ -163,7 +175,7 @@
     }
 
     .car-container form {
-      display: inline-block; /* Faz o formulário ficar ao lado do botão */
+      display: inline-block;
       margin-top: 20px;
     }
 
@@ -171,48 +183,58 @@
       font-size: 14px;
       margin-top: 20px;
     }
-    {# ...cabeçalho igual #}
 
-        {# --- formulário de avaliação (inline) --- #}
-        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
-          {% csrf_token %}
-          <label for="score" class="text-sm font-bold">Avalie:</label>
-          <select name="score" id="score" class="border rounded p-1">
-            {% for i in "012345" %}
-              <option value="{{ i }}">{{ i }}</option>
-            {% endfor %}
-          </select>
-
-          {# botão agora tem classe .avaliar-btn #}
-          <button type="submit" class="avaliar-btn">
-            ⭐ Enviar
-          </button>
-        </form>
-
-{# ...restante do template igual #}
-
-  <style>
-    /* ---- botão de avaliação mais bonito ---- */
-    .avaliar-btn{
-      background: linear-gradient(135deg,#2563eb,#3b82f6);
-      color:#fff;
-      padding:8px 18px;
-      border:none;
-      border-radius:8px;
-      font-weight:600;
-      transition:transform .2s,box-shadow .2s;
-      display:flex;
-      align-items:center;
-      gap:6px;
+    .avaliar-btn {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: #fff;
+      padding: 8px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform .2s, box-shadow .2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .avaliar-btn:hover{
-      box-shadow:0 4px 12px rgba(0,0,0,.25);
-      transform:translateY(-2px);
+    .avaliar-btn:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,.25);
+      transform: translateY(-2px);
     }
-    .avaliar-btn:active{
-      transform:translateY(0);
-      box-shadow:0 2px 6px rgba(0,0,0,.2);
+    .avaliar-btn:active {
+      transform: translateY(0);
+      box-shadow: 0 2px 6px rgba(0,0,0,.2);
     }
 
+    .mensagem-container {
+      max-width: 700px;
+      margin: 40px auto 0;
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+    .mensagem-form textarea {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: none;
+      margin-bottom: 10px;
+    }
+    .mensagem-btn {
+      background: linear-gradient(135deg, #2563eb, #3b82f6);
+      color: #fff;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .mensagem-btn:hover {
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transform: translateY(-2px);
+    }
   </style>
 {% endblock %}
