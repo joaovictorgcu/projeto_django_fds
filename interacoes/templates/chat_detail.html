@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %}Detalhes do Chat{% endblock %}
+
+{% block content %}
+  <div class="chat-detail-container">
+    <h1>Chat sobre o carro "{{ chat.car.model }}"</h1>
+    <p><strong>Comprador:</strong> {{ chat.comprador.username }} | 
+       <strong>Vendedor:</strong> {{ chat.vendedor.username }}</p>
+
+    <div class="messages-list">
+      {% for message in messages %}
+        <div class="message-item">
+          <p><strong>{{ message.sender.username }}:</strong> {{ message.text }}</p>
+          <p><small>Enviado em: {{ message.created_at|date:"d/m/Y H:i" }}</small></p>
+        </div>
+      {% endfor %}
+    </div>
+
+    <form method="post">
+      {% csrf_token %}
+      <textarea name="message_text" placeholder="Escreva sua mensagem..." required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <style>
+    .chat-detail-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .messages-list {
+      margin-top: 20px;
+    }
+
+    .message-item {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .message-item p {
+      margin: 5px 0;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      min-height: 80px;
+      font-size: 14px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+{% endblock %}

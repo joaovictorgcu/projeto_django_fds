@@ -3,13 +3,13 @@ from interacoes.models import Favorito
 from cars.models import Car
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Comentario, Mensagem
+from .models import Comentario, Mensagem, Conversa
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.contrib import messages
 from cars.models import Car, CarRating
 from django.contrib.auth.decorators import login_required
-from django.db.models import Avg
+from django.db.models import Avg, Q
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
@@ -42,7 +42,7 @@ def lista_favoritos(request):
 
 from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
-from .models import Comentario
+from .models import Comentario, Message, Chat
 from cars.models import Car,Brand  # certifique-se que está importando o modelo certo
 
 def detalhes_carro(request, carro_id):
@@ -170,7 +170,69 @@ def enviar_mensagem(request, carro_id):
     
 
 @login_required
+def lista_conversas(request):
+    conversas = Conversa.objects.filter(Q(comprador=request.user) | Q(vendedor=request.user)).order_by('-ultima_mensagem')
+    
+    if not conversas:
+        mensagens = 'Você ainda não tem conversas.'
+    else:
+        mensagens = None
+    
+    return render(request, 'chat.html', {'conversas': conversas, 'mensagens': mensagens})
+@login_required
+def iniciar_chat(request, carro_id):
+    carro = Car.objects.get(id=carro_id)
+    vendedor = carro.usuario
+
+    # Verifica se o usuário já tem um chat com o vendedor para este carro
+    chat, created = Chat.objects.get_or_create(
+        car=carro,
+        comprador=request.user,
+        vendedor=vendedor
+    )
+
+    if created:
+        # Se o chat foi criado, você pode adicionar uma mensagem de boas-vindas
+        Message.objects.create(
+            chat=chat,
+            sender=request.user,
+            text="Olá, gostaria de saber mais sobre o carro!"
+        )
+
+    # Redireciona o usuário para a página de chat
+    return redirect('chat_detail', chat_id=chat.id)
+
+@login_required
+def chat_detail(request, chat_id):
+    chat = get_object_or_404(Chat, id=chat_id)
+
+    if request.method == 'POST':
+        message_text = request.POST.get('message_text')  # Usando .get() para garantir que não cause erro caso o campo não exista
+        # Cria a nova mensagem
+        Message.objects.create(
+            chat=chat,
+            sender=request.user,
+            text=message_text
+        )
+        # Redireciona para o chat com a nova mensagem
+        return redirect('chat_detail', chat_id=chat.id)
+
+    # Buscar todas as mensagens do chat
+    messages = chat.messages.order_by('created_at')
+
+    return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})
+@login_required
 def minhas_mensagens(request):
-    mensagens = Mensagem.objects.filter(destinatario=request.user).select_related('carro').order_by("-data_envio")
-    mensagens = [m for m in mensagens if m.carro is not None]
-    return render(request, "minhas_mensagens.html", {"mensagens": mensagens})
+    # Pegar os chats onde o usuário é o comprador ou vendedor
+    chats = Chat.objects.filter(comprador=request.user) | Chat.objects.filter(vendedor=request.user)
+
+    # Buscar as últimas mensagens de cada chat
+    chats_com_mensagens = []
+    for chat in chats:
+        last_message = chat.messages.order_by('-created_at').first()  # Obtem a última mensagem
+        chats_com_mensagens.append({
+            'chat': chat,
+            'last_message': last_message
+        })
+
+    return render(request, 'minhas_mensagens.html', {'chats_com_mensagens': chats_com_mensagens})

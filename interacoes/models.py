@@ -21,14 +21,39 @@ class Comentario(models.Model):
 
 
 
-class Mensagem(models.Model):
-    remetente = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensagens_enviadas')
-    destinatario = models.ForeignKey(User, on_delete=models.CASCADE, related_name='mensagens_recebidas')
-    carro = models.ForeignKey(Car, null=True, blank=True, on_delete=models.SET_NULL)
-    conteudo = models.TextField()
-    data_envio = models.DateTimeField(auto_now_add=True)
-    
+class Conversa(models.Model):
+    carro = models.ForeignKey(Car, on_delete=models.CASCADE)
+    comprador = models.ForeignKey(User, on_delete=models.CASCADE, related_name='comprador_conversas')
+    vendedor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='vendedor_conversas')
+    ultima_mensagem = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'Mensagem de {self.remetente} para {self.destinatario} sobre {self.carro}'
+        return f"{self.comprador.username} - {self.carro.model}"
 
+class Mensagem(models.Model):
+    conversa = models.ForeignKey(Conversa, on_delete=models.CASCADE, null=True, blank=True)  # Permite valor nulo
+    remetente = models.ForeignKey(User, on_delete=models.CASCADE)
+    conteudo = models.TextField()
+    data_envio = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Mensagem de {self.remetente.username} em {self.data_envio}"
+    
+    
+class Chat(models.Model):
+    car = models.ForeignKey(Car, related_name='chats', on_delete=models.CASCADE)
+    comprador = models.ForeignKey(User, related_name='comprador_chats', on_delete=models.CASCADE)
+    vendedor = models.ForeignKey(User, related_name='vendedor_chats', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Chat entre {self.comprador.username} e {self.vendedor.username} sobre {self.car.model}'
+    
+class Message(models.Model):
+    chat = models.ForeignKey(Chat, related_name='messages', on_delete=models.CASCADE)
+    sender = models.ForeignKey(User, related_name='messages_sent', on_delete=models.CASCADE)
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f'Mensagem de {self.sender.username} em {self.created_at}'

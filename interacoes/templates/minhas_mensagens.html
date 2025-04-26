@@ -5,51 +5,68 @@
 {% block content %}
   <div class="mensagens-container">
     <h1>Minhas Mensagens</h1>
-    {% if mensagens %}
-      <ul class="mensagens-lista">
-        {% for mensagem in mensagens %}
-          <li>
-            <strong>De:</strong> {{ mensagem.remetente.username }}<br>
-            {% if mensagem.carro %}
-              <strong>Carro:</strong> <a href="{% url 'detalhes_carro' mensagem.carro.id %}">{{ mensagem.carro.model }}</a><br>
-            {% else %}
-              <strong>Carro:</strong> Não disponível<br>
-            {% endif %}
-            <strong>Mensagem:</strong><br> {{ mensagem.conteudo }}<br>
-            <span class="mensagem-data">{{ mensagem.data_envio|date:"d/m/Y H:i" }}</span>
-          </li>
+
+    {% if chats_com_mensagens %}
+      <div class="chats-list">
+        {% for chat_item in chats_com_mensagens %}
+          <div class="chat-item">
+            <h3>Chat sobre o carro "{{ chat_item.chat.car.model }}"</h3>
+            <p><strong>Comprador:</strong> {{ chat_item.chat.comprador.username }} | 
+               <strong>Vendedor:</strong> {{ chat_item.chat.vendedor.username }}</p>
+            <p><strong>Última mensagem:</strong> {{ chat_item.last_message.text }}</p>
+            <p><small>Enviada em: {{ chat_item.last_message.created_at|date:"d/m/Y H:i" }}</small></p>
+            <a href="{% url 'chat_detail' chat_item.chat.id %}" class="btn-chat">Ver Chat</a>
+          </div>
         {% endfor %}
-      </ul>
+      </div>
     {% else %}
-      <p>Você ainda não recebeu nenhuma mensagem.</p>
+      <p>Você não tem chats.</p>
     {% endif %}
   </div>
 
   <style>
     .mensagens-container {
-      max-width: 700px;
-      margin: 40px auto;
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-    }
-    .mensagens-lista {
-      list-style: none;
-      padding: 0;
-    }
-    .mensagens-lista li {
-      background: #f9f9f9;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
       border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 12px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
-    .mensagem-data {
-      display: block;
-      font-size: 12px;
-      color: #777;
-      margin-top: 8px;
+
+    .chats-list {
+      margin-top: 20px;
+    }
+
+    .chat-item {
+      background-color: #f9f9f9;
+      padding: 15px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-item h3 {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .chat-item p {
+      margin: 5px 0;
+    }
+
+    .btn-chat {
+      display: inline-block;
+      margin-top: 10px;
+      background-color: #007bff;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+    }
+
+    .btn-chat:hover {
+      background-color: #0056b3;
     }
   </style>
 {% endblock %}

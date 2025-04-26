@@ -96,8 +96,12 @@ ROOT_URLCONF = "MATCHAUTOS.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "MATCHAUTOS/templates"],
-        "APP_DIRS": True,
+        "DIRS": [
+            BASE_DIR / "MATCHAUTOS/templates",  # Templates globais
+            BASE_DIR / "interacoes/templates",  # Templates do app interacoes
+            BASE_DIR / "car/templates",         # Templates do app car
+        ],
+        "APP_DIRS": True,  # Certifique-se de que ele procura dentro das pastas 'templates' dos apps também
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.debug",

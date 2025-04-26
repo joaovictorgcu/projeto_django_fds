@@ -20,7 +20,10 @@ urlpatterns = [
     path('carro/<int:carro_id>/enviar_mensagem/', views.enviar_mensagem, name='enviar_mensagem'),
     path("mensagens/", views.minhas_mensagens, name="minhas_mensagens"),
     path("mensagem/enviar/<int:carro_id>/", views.enviar_mensagem, name="enviar_mensagem"),
+    path('chat/<int:chat_id>/', views.chat_detail, name='chat_detail'),
+    path('iniciar-chat/<int:carro_id>/', views.iniciar_chat, name='iniciar_chat'),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
