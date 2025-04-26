@@ -10,7 +10,11 @@
         {% for mensagem in mensagens %}
           <li>
             <strong>De:</strong> {{ mensagem.remetente.username }}<br>
-            <strong>Carro:</strong> <a href="{% url 'detalhes_carro' mensagem.carro.id %}">{{ mensagem.carro.model }}</a><br>
+            {% if mensagem.carro %}
+              <strong>Carro:</strong> <a href="{% url 'detalhes_carro' mensagem.carro.id %}">{{ mensagem.carro.model }}</a><br>
+            {% else %}
+              <strong>Carro:</strong> Não disponível<br>
+            {% endif %}
             <strong>Mensagem:</strong><br> {{ mensagem.conteudo }}<br>
             <span class="mensagem-data">{{ mensagem.data_envio|date:"d/m/Y H:i" }}</span>
           </li>

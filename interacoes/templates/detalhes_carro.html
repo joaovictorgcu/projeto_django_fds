@@ -48,7 +48,7 @@
         {# Enviar mensagem ao vendedor --- #}
         {% if user.is_authenticated and user != carro.usuario %}
           <div class="mensagem-container">
-            <h3>Enviar mensagem ao vendedor</h3>
+            <h3>Enviar mensagem diretamente ao vendedor</h3>
             <form method="post" action="{% url 'enviar_mensagem' carro.id %}" class="mensagem-form">
               {% csrf_token %}
               <textarea name="conteudo" rows="3" placeholder="Escreva sua mensagem..." required></textarea>
@@ -64,7 +64,7 @@
 
   {# ---------- COMENTÁRIOS ---------- #}
   <div class="comentarios-container">
-    <h3>Comentários</h3>
+    <h3>Comentários Públicos</h3>
 
     {% if user.is_authenticated %}
       <form id="comentario-form" method="post" class="comentario-form">
