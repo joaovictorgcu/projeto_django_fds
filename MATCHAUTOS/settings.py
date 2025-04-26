@@ -138,7 +138,6 @@ MEDIA_ROOT  = BASE_DIR / "media"
 # 👉 faz o WhiteNoise expor MEDIA_ROOT em /media/
 WHITENOISE_MEDIA_ROOT = MEDIA_ROOT
 
-# Storage otimizado só em produção
 if not NOT_PROD:
     STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
