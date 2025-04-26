@@ -171,5 +171,6 @@ def enviar_mensagem(request, carro_id):
 
 @login_required
 def minhas_mensagens(request):
-    mensagens = Mensagem.objects.filter(destinatario=request.user).order_by("-data_envio")
+    mensagens = Mensagem.objects.filter(destinatario=request.user).select_related('carro').order_by("-data_envio")
+    mensagens = [m for m in mensagens if m.carro is not None]
     return render(request, "minhas_mensagens.html", {"mensagens": mensagens})
