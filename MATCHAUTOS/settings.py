@@ -27,7 +27,7 @@ if NOT_PROD:
     ALLOWED_HOSTS = [
         "127.0.0.1",
         "localhost",
-        "matchautos6-d2b9fva2c6avc6d8.brazilsouth-01.azurewebsites.net",
+        "match1autos.azurewebsites.net",
     ]
     DATABASES = {
         "default": {
