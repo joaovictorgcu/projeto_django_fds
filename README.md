@@ -49,11 +49,11 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 - [Screencast](https://www.youtube.com/watch?v=qDFVNQ_2Y34)
 
+- [Jira](https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary)
+
 - *Sprint 1(Concluida):* 
 ![alt text](<media/entregas/Sprint 1.jpg>)
 ![alt text](<media/entregas/Quadro 1 concluido.jpg>)
-
-- *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
 
 - *Programação em Par:*
 Nosso grupo passou por um momento complicado com a saída de alguns integrantes, e isso nos obrigou a começar tudo do zero. Com o tempo apertado, fizemos uma chamada para trabalhar juntos no código, pesquisamos bastante e fomos corrigindo os erros ao longo do processo. Na última reunião, nos encontramos presencialmente para ajustar os últimos detalhes, resolver os problemas que ainda tinham e conseguir fazer o deploy na Azure.
@@ -63,6 +63,14 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 
 - *Bug tracker:*
 ![alt text](<media/entregas/Bug tracker.jpg>)
+
+</details>
+
+<details>
+<summary><h2>Terceira Entrega</h2></summary>
+
+- *Programação em Par (atualização-Entrega 3):*
+Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais frequência a técnica de programação em par. Essa abordagem mostrou-se especialmente eficaz na resolução de problemas complexos e na promoção de uma troca constante de ideias entre os membros. No entanto, optamos por não adotar essa prática em todas as etapas do desenvolvimento, alternando-a com o trabalho individual de acordo com as necessidades e características específicas de cada tarefa.
 
 </details>
 
