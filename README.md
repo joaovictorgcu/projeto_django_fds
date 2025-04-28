@@ -31,7 +31,8 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 <details>
 <summary><h2>Primeira Entrega</h2></summary>
-![alt text](<media/entregas/Backlog 1.jpg>)
+
+- ![alt text](<media/entregas/Backlog 1.jpg>)
 
 - [ScreenCast](https://www.youtube.com/watch?v=Ry6wK9M6WPc&feature=youtu.be)
 
