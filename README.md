@@ -1,4 +1,6 @@
-![alt text](<media/cars/MatchAuto_Logo.png>)
+<p align="center">
+  <img src="media/cars/MatchAuto_Logo.png" alt="MatchAuto Logo">
+</p>
 
 # MATCH AUTO
 - *O que é a Match Auto?*
