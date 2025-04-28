@@ -29,14 +29,17 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 - *DOCS Historias:* https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing
 
-## Entrega 1️⃣:
+<details>
+<summary><h2>Primeira Entrega</h2></summary>
 ![alt text](<media/entregas/Backlog 1.jpg>)
 
-- *ScreenCast:* https://www.youtube.com/watch?v=Ry6wK9M6WPc&feature=youtu.be
+- [ScreenCast](https://www.youtube.com/watch?v=Ry6wK9M6WPc&feature=youtu.be)
 
-- *DOCS Historias:* https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing
+- [DOCS Historias](https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing)
 
-- *Figma:* https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1
+- [Figma](https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1)
+
+</details>
 
 # Entrega 2️⃣:
 - *Site:* https://match1autos.azurewebsites.net/
