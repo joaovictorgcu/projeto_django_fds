@@ -60,10 +60,10 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 
 ## Equipe
 
-- [Pablo José Pellegrino Cintra] (https://github.com/PabloJPCintra) - pjpc@cesar.school
+- [Pablo José Pellegrino Cintra](https://github.com/PabloJPCintra) - pjpc@cesar.school
 
-- [Raul Vitor Ferraz Silva] (https://github.com/raulferraz85) - rvfs@cesar.shool
+- [Raul Vitor Ferraz Silva](https://github.com/raulferraz85) - rvfs@cesar.shool
 
-- [João Victor Guimarães Cavalcanti Uchôa] (https://github.com/joaovictorgcu) - jvgcu@cesar.school
+- [João Victor Guimarães Cavalcanti Uchôa](https://github.com/joaovictorgcu) - jvgcu@cesar.school
 
-- [Luís Eduardo Bérard de Paiva Moura Rodrigues] (https://github.com/luisedu975) - lebpmr@cesar.school
+- [Luís Eduardo Bérard de Paiva Moura Rodrigues](https://github.com/luisedu975) - lebpmr@cesar.school
