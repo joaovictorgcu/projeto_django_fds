@@ -73,6 +73,9 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 <details>
 <summary><h2>Terceira Entrega</h2></summary>
 
+![backlog](<media/entregas/Backlog 2.jpg>)
+![quadro](<media/entregas/sprint 2.jpg>)
+
 - *Programação em Par (atualização-Entrega 3):*
 Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais frequência a técnica de programação em par. Essa abordagem mostrou-se especialmente eficaz na resolução de problemas complexos e na promoção de uma troca constante de ideias entre os membros. No entanto, optamos por não adotar essa prática em todas as etapas do desenvolvimento, alternando-a com o trabalho individual de acordo com as necessidades e características específicas de cada tarefa.
 
