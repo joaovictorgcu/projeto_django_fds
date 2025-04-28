@@ -137,8 +137,7 @@ STATIC_URL  = os.getenv("DJANGO_STATIC_URL", "/static/")
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 MEDIA_URL   = "/media/"
-MEDIA_ROOT = os.path.join(os.environ.get('HOME', BASE_DIR), 'site', 'wwwroot', 'media')
-import os
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Crie o diretório de mídia se não existir
 if not os.path.exists(MEDIA_ROOT):
