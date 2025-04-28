@@ -32,7 +32,7 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 <details>
 <summary><h2>Primeira Entrega</h2></summary>
 
-- ![alt text](<media/entregas/Backlog 1.jpg>)
+ ![alt text](<media/entregas/Backlog 1.jpg>)
 
 - [ScreenCast](https://www.youtube.com/watch?v=Ry6wK9M6WPc&feature=youtu.be)
 
@@ -42,10 +42,12 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 </details>
 
-# Entrega 2️⃣:
-- *Site:* https://match1autos.azurewebsites.net/
+<details>
+<summary><h2>Segunda Entrega</h2></summary>
 
-- *Screencast:* https://www.youtube.com/watch?v=qDFVNQ_2Y34
+- [Site](https://match1autos.azurewebsites.net/)
+
+- [Screencast](https://www.youtube.com/watch?v=qDFVNQ_2Y34)
 
 - *Sprint 1(Concluida):* 
 ![alt text](<media/entregas/Sprint 1.jpg>)
@@ -61,6 +63,8 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 
 - *Bug tracker:*
 ![alt text](<media/entregas/Bug tracker.jpg>)
+
+</details>
 
 ## Equipe
 
