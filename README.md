@@ -49,6 +49,6 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 
 - *Raul Vitor Ferraz Silva - rvfs@cesar.shool*
 
-- *Joao Victor Guimarães Cavalcanti Uchôa - jvgcu@cesar.school*
+- *João Victor Guimarães Cavalcanti Uchôa - jvgcu@cesar.school*
 
 - *Luís Eduardo Bérard de Paiva Moura Rodrigues - lebpmr@cesar.school*
