@@ -1,4 +1,4 @@
-![MATCH] (<media/cars/MatchAuto_Logo.png>)
+![alt text](<media/cars/MatchAuto_Logo.png>)
 
 # MATCH AUTO
 - *O que é a Match Auto?*
