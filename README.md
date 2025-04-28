@@ -22,12 +22,16 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 - **Gestão de Projetos**: Jira - Ferramenta para o planejamento e acompanhamento das tarefas do projeto.
 - **Comunicação e Reuniões**: Discord/WhatsApp - Plataformas utilizadas para reuniões e comunicação da equipe.
 
-## Links:
-- *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
+<details>
+<summary><h2>Links</h2></summary>
 
-- *Figma:* https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1  
+- [Jira](https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary)
 
-- *DOCS Historias:* https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing
+- [Figma](https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1)  
+
+- [DOCS Historias](https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing)
+
+</details>
 
 <details>
 <summary><h2>Primeira Entrega</h2></summary>
