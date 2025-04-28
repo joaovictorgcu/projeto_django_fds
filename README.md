@@ -2,19 +2,34 @@
   <img src="media/cars/MatchAuto_Logo.png" alt="MatchAuto Logo">
 </p>
 
-# MATCH AUTO
+## MATCH AUTO
 - *O que é a Match Auto?*
 
 A Match Auto é um site de compra e venda de carros pela internet. Você pode procurar veículos à venda, comparar preços, ver fotos e detalhes, tudo em um só lugar. Também é possível anunciar seu carro para revenda de forma fácil e rápida. Nosso objetivo é facilitar o processo de compra e venda de carros, conectando vendedores e compradores com segurança e praticidade.
 
-# Links:
+Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimento de Software na CESAR School - turma 2025.1.
+
+## Tecnologias
+
+- **Framework de Desenvolvimento**: Django - Framework web em Python para o back-end.
+- **Interface**: HTML/CSS/JavaScript - Para a interface do usuário.
+- **Banco de dados**: Sqlite/PostgreSQL - Para armazenar informações.
+- **Hospedagem**: Azure - O produto final será hospedado na plataforma Azure.
+
+## Ferramentas
+
+- **Prototipação**: Figma - Utilizado para criar e validar protótipos de design da interface do usuário.
+- **Gestão de Projetos**: Jira - Ferramenta para o planejamento e acompanhamento das tarefas do projeto.
+- **Comunicação e Reuniões**: Discord/WhatsApp - Plataformas utilizadas para reuniões e comunicação da equipe.
+
+## Links:
 - *Jira:* https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary
 
 - *Figma:* https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1  
 
 - *DOCS Historias:* https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing
 
-# Entrega 1️⃣:
+## Entrega 1️⃣:
 ![alt text](<media/entregas/Backlog 1.jpg>)
 
 - *ScreenCast:* https://www.youtube.com/watch?v=Ry6wK9M6WPc&feature=youtu.be
@@ -43,12 +58,12 @@ Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica
 - *Bug tracker:*
 ![alt text](<media/entregas/Bug tracker.jpg>)
 
-# Contribuidores
+## Equipe
 
-- *Pablo José Pellegrino Cintra - pjpc@cesar.school*
+- [Pablo José Pellegrino Cintra] (https://github.com/PabloJPCintra) - pjpc@cesar.school
 
-- *Raul Vitor Ferraz Silva - rvfs@cesar.shool*
+- [Raul Vitor Ferraz Silva] (https://github.com/raulferraz85) - rvfs@cesar.shool
 
-- *João Victor Guimarães Cavalcanti Uchôa - jvgcu@cesar.school*
+- [João Victor Guimarães Cavalcanti Uchôa] (https://github.com/joaovictorgcu) - jvgcu@cesar.school
 
-- *Luís Eduardo Bérard de Paiva Moura Rodrigues - lebpmr@cesar.school*
+- [Luís Eduardo Bérard de Paiva Moura Rodrigues] (https://github.com/luisedu975) - lebpmr@cesar.school
