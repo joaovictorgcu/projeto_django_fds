@@ -139,11 +139,9 @@ STATIC_ROOT = BASE_DIR / "static"
 MEDIA_URL   = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Crie o diretório de mídia se não existir
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
-# 👉 faz o WhiteNoise expor MEDIA_ROOT em /media/
 WHITENOISE_MEDIA_ROOT = MEDIA_ROOT
 
 if not NOT_PROD:
