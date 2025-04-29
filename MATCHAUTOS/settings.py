@@ -130,9 +130,6 @@ TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
 
-# ──────────────────────────────────────────────────────────────
-# STATIC & MEDIA
-# ──────────────────────────────────────────────────────────────
 STATIC_URL  = os.getenv("DJANGO_STATIC_URL", "/static/")
 STATIC_ROOT = BASE_DIR / "static"
 
