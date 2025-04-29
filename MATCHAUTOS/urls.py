@@ -20,8 +20,4 @@ urlpatterns = [
     path('index/', index_view, name='index'),
     path('interacoes/', include('interacoes.urls')),
     path('meus-anuncios/', meus_anuncios, name='meus_anuncios'),
-]
-
-
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
