@@ -62,9 +62,6 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 - *Programação em Par:*
 Nosso grupo passou por um momento complicado com a saída de alguns integrantes, e isso nos obrigou a começar tudo do zero. Com o tempo apertado, fizemos uma chamada para trabalhar juntos no código, pesquisamos bastante e fomos corrigindo os erros ao longo do processo. Na última reunião, nos encontramos presencialmente para ajustar os últimos detalhes, resolver os problemas que ainda tinham e conseguir fazer o deploy na Azure.
 
-- *Programação em Par (atualização-Entrega 3):*
-Durante o avanço da construção do nosso projeto, a equipe utilizou a técnica de programação em par com mais frequencia. Essa abordagem foi especialmente útil para resolver problemas mais complexos e garantir a troca constante de ideias. No entanto, não adotamos essa prática em todos os momentos do desenvolvimento, optando por alternar com trabalhos individuais conforme a necessidade e a natureza das tarefas.
-
 - *Bug tracker:*
 ![alt text](<media/entregas/Bug tracker.jpg>)
 
