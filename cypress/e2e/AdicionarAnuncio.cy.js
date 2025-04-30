@@ -22,13 +22,13 @@ describe('Fluxo completo de registro, login, criação e edição de anúncio.',
       cy.contains('Novo Carro').click()
   
       cy.url().should('include', '/interacoes/novo-carro')
-      cy.get('input[name="model"]').type(`Teste ${timestamp}`)
+      cy.get('input[name="model"]').type(`Brasilia`)
       cy.get('select[name="brand"]').select('BYD')
       cy.get('input[name="factory_year"]').type('2022')
       cy.get('input[name="model_year"]').type('2023')
       cy.get('input[name="km"]').type('15000')
       cy.get('input[name="value"]').type('25000')
-      cy.get('input[type="file"]').selectFile('C:/Users/joaov/OneDrive/Área de Trabalho/mustang.jpeg')
+      cy.get('input[type="file"]').selectFile('C:\Users\joaov\OneDrive\Área de Trabalho\MATCHAUTOS\media\cars\brasilia_sICl38U.webp')
       cy.contains('button', 'Registrar').click()
     })
   
