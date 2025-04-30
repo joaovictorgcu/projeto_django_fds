@@ -40,7 +40,7 @@ jobs:
           npm install -g cypress
           cypress install
 
-      - name: Create virtual environment and install Python dependencies
+      - name: Install Python dependencies
         run: |
           python -m venv venv
           source venv/bin/activate
@@ -52,8 +52,10 @@ jobs:
           nohup python manage.py migrate &
           nohup python manage.py runserver 0.0.0.0:8000 &
 
+      # Rodar os testes do Cypress
       - name: Run Cypress tests
-        run: cypress run
+        run: |
+          npx cypress run
 
       - name: Zip artifact for deployment
         run: zip -r release.zip ./*

@@ -16,7 +16,9 @@
     "url": "https://github.com/joaovictorgcu/projeto_django_fds/issues"
   },
   "homepage": "https://github.com/joaovictorgcu/projeto_django_fds#readme",
-  "dependencies": {
-    "cypress": "^14.3.2"
-  }
+  "devDependencies": {
+    "cypress": "^14.3.2",
+    "cypress-file-upload": "^5.0.8"
+  },
+  "keywords": []
 }
