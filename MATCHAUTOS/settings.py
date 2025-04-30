@@ -124,26 +124,21 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
-
+DEBUG = True
 LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
 
-# ──────────────────────────────────────────────────────────────
-# STATIC & MEDIA
-# ──────────────────────────────────────────────────────────────
 STATIC_URL  = os.getenv("DJANGO_STATIC_URL", "/static/")
-STATIC_ROOT = BASE_DIR / "staticfiles"
+STATIC_ROOT = BASE_DIR / "static"
 
 MEDIA_URL   = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# Crie o diretório de mídia se não existir
 if not os.path.exists(MEDIA_ROOT):
     os.makedirs(MEDIA_ROOT)
 
-# 👉 faz o WhiteNoise expor MEDIA_ROOT em /media/
 WHITENOISE_MEDIA_ROOT = MEDIA_ROOT
 
 if not NOT_PROD:
