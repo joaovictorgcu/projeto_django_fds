@@ -7,22 +7,33 @@ from django.contrib import messages
 def cars_view(request):
     cars = Car.objects.all()
     order_by = request.GET.get('order_by')
+    search_query = request.GET.get('search')
 
+    # Filtro de busca
+    if search_query:
+        cars = cars.filter(
+            model__icontains=search_query
+        ) | cars.filter(
+            brand__name__icontains=search_query
+        )
+
+    # Filtros de ordenação
     if order_by == 'price_asc':
         cars = cars.order_by('value')
     elif order_by == 'price_desc':
         cars = cars.order_by('-value')
     elif order_by == 'brand':
-        cars = cars.order_by('brand__name')  # Aqui é necessário ter a relação 'brand__name'
+        cars = cars.order_by('brand__name')
     elif order_by == 'year_asc':
         cars = cars.order_by('factory_year')
     elif order_by == 'year_desc':
         cars = cars.order_by('-factory_year')
-    elif order_by == 'rating_asc':  # Filtro por avaliação crescente
+    elif order_by == 'rating_asc':
         cars = cars.order_by('rating')
-    elif order_by == 'rating_desc':  # Filtro por avaliação decrescente
+    elif order_by == 'rating_desc':
         cars = cars.order_by('-rating')
 
+    # IDs dos favoritos
     favoritos_ids = []
     if request.user.is_authenticated:
         favoritos_ids = list(
@@ -32,7 +43,10 @@ def cars_view(request):
     return render(
         request, 
         'cars.html',
-        {'cars': cars, 'favoritos_ids': favoritos_ids}
+        {
+            'cars': cars,
+            'favoritos_ids': favoritos_ids
+        }
     )
 
 

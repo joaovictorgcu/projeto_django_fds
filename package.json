@@ -1,0 +1,22 @@
+{
+  "name": "matchautos",
+  "version": "1.0.0",
+  "description": "<p align=\"center\">\r   <img src=\"media/cars/MatchAuto_Logo.png\" alt=\"MatchAuto Logo\">\r </p>",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joaovictorgcu/projeto_django_fds.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joaovictorgcu/projeto_django_fds/issues"
+  },
+  "homepage": "https://github.com/joaovictorgcu/projeto_django_fds#readme",
+  "dependencies": {
+    "cypress": "^14.3.2"
+  }
+}
