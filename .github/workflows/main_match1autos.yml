@@ -30,28 +30,33 @@ jobs:
           source venv/bin/activate
           pip install -r requirements.txt
 
-      # 👇 👈 ALTERADO: Instalar Node e Cypress
+      # 👇 Instala Node.js para permitir Cypress
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # 👈 Pode ser '18' ou '20'
+          node-version: '20' # Pode ser '18' ou '20'
 
+      # 👇 Instala o pacote Cypress
       - name: Install Cypress
         run: |
           npm install cypress --save-dev
 
-      # ✅ NOVO: Corrigir permissões do Cypress
+      # ✅ Instala o binário do Cypress (correção do erro de binary missing)
+      - name: Install Cypress binary
+        run: npx cypress install
+
+      # (Opcional) Corrige permissão do binário se necessário
       - name: Fix Cypress binary permissions
         run: chmod +x ./node_modules/.bin/cypress
 
-      # 👇 👈 ALTERADO: Iniciar servidor Django para testes
+      # 👇 Inicia o servidor Django em segundo plano para os testes
       - name: Run Django server in background
         run: |
           source venv/bin/activate
           nohup python manage.py migrate &
           nohup python manage.py runserver 0.0.0.0:8000 &
 
-      # 👇 👈 ALTERADO: Rodar os testes Cypress
+      # 👇 Roda os testes automatizados com Cypress
       - name: Run Cypress tests
         run: npx cypress run
 
@@ -92,7 +97,6 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_0C07E5D5F83A407494D5115FA3DD97EA }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_43587596AC574A139A8086FE5CBDE862 }}
 
-      # Novo passo: Rodar collectstatic para coletar arquivos estáticos
       - name: Run collectstatic
         run: |
           source venv/bin/activate
