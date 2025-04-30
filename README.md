@@ -27,7 +27,7 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 - [Jira](https://gymstatsfds.atlassian.net/jira/software/projects/MA/summary)
 
-- [Figma](https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1)  
+- [Figma](https://www.figma.com/design/Y6RKVYPMQy3K7fgCNdj4Ew/Match-Auto-3%C2%B0-entrega?node-id=0-1&p=f&t=NHlEV921Gt9oP75q-0)  
 
 - [DOCS Historias](https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing)
 
@@ -42,7 +42,7 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 
 - [DOCS Historias](https://docs.google.com/document/d/1_1PDX6QptQCONxTx7huafMM-O5dQoRCzrxRWjcWn7Ic/edit?usp=sharing)
 
-- [Figma](https://www.figma.com/design/rtAiMw6YY3s3NuRIypEiRF/Match-Auto?node-id=0-1&t=cZqzLADlYnRPBjW0-1)
+- [Figma](https://www.figma.com/design/Y6RKVYPMQy3K7fgCNdj4Ew/Match-Auto-3%C2%B0-entrega?node-id=0-1&p=f&t=NHlEV921Gt9oP75q-0)
 
 </details>
 
@@ -71,7 +71,7 @@ Nosso grupo passou por um momento complicado com a saída de alguns integrantes,
 <summary><h2>Terceira Entrega</h2></summary>
 
 ![backlog2](<media/entregas/Backlog 2.jpg>)
-![quadro2](<media/entregas/Quadro 2.jpg>)
+![quadro2](<media/entregas/Quadro 2 att.jpg>)
 ![bugTracker](<media/entregas/BugTracker2.jpg>)
 
 - *Programação em Par (atualização-Entrega 3):*
@@ -83,7 +83,7 @@ Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais 
 
 - [ScreenCastCI/CD](https://youtu.be/d1S7LFm-hro)
 
-- [ScreenCastTesteAuto]
+- [ScreenCastTesteAutomatizado](https://youtu.be/XqA0_-212Ao)
 
 </details>
 
