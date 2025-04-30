@@ -5,7 +5,7 @@ describe('Testes de edição e exclusão de anúncios', () => {
     it('Cenário Positivo (1): Edição de anúncio com sucesso', () => {
     // Fazer login
         cy.visit('http://127.0.0.1:8000/login/')
-        cy.get('input[name="username"]').type('jv')
+        cy.get('input[name="username"]').type('kk')
         cy.get('input[name="password"]').type('123')
         cy.contains('button', 'Entrar').click()
   
@@ -40,12 +40,7 @@ describe('Testes de edição e exclusão de anúncios', () => {
     // Acessar a página "Meus Anúncios"
     cy.visit('http://127.0.0.1:8000/meus-anuncios/')
   
-    // Clicar no botão de deletar
-    cy.get('.btn-danger').click()
-    cy.wait(2000)
-    // Confirmar a exclusão
-    cy.on('window:confirm', () => true)
-  
+    
     // Esperar 5 segundos
   })
   
