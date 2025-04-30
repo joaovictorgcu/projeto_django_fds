@@ -18,14 +18,13 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.13'
+          python-version: '3.10'  # Ou a versão que você usa localmente
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # ✅ Cache do Cypress para evitar download a cada build
       - name: Cache Cypress binary
         uses: actions/cache@v3
         with:
@@ -34,7 +33,6 @@ jobs:
           restore-keys: |
             cypress-cache-${{ runner.os }}-
 
-      # ✅ Instalar Cypress globalmente e baixar o binário
       - name: Install Cypress globally and binary
         run: |
           npm install -g cypress
@@ -42,17 +40,14 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-          python -m venv venv
-          source venv/bin/activate
+          pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run Django server in background
         run: |
-          source venv/bin/activate
           nohup python manage.py migrate &
           nohup python manage.py runserver 0.0.0.0:8000 &
 
-      # Rodar os testes do Cypress
       - name: Run Cypress tests
         run: |
           npx cypress run
@@ -66,7 +61,6 @@ jobs:
           name: python-app
           path: |
             release.zip
-            !venv/
 
   deploy:
     runs-on: ubuntu-latest
@@ -87,6 +81,16 @@ jobs:
       - name: Unzip artifact
         run: unzip release.zip
 
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install Python dependencies
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+
       - name: Login to Azure
         uses: azure/login@v2
         with:
@@ -95,10 +99,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_43587596AC574A139A8086FE5CBDE862 }}
 
       - name: Run collectstatic
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-          python manage.py collectstatic --noinput
+        run: python manage.py collectstatic --noinput
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3

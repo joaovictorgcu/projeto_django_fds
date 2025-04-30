@@ -1,4 +1,4 @@
-describe('Fluxo completo de registro, login, criação e edição de anúncio.', () => {
+describe('Fluxo completo de edição de anuncio (registro, login, criação e ediçao)', () => {
     const timestamp = Date.now();
     const username = `usuario_teste_${timestamp}`;
     const senha = '123';
