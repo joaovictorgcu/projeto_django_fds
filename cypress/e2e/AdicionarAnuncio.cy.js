@@ -1,7 +1,7 @@
 describe('Fluxo completo de registro, login, criação e edição de anúncio.', () => {
   const timestamp = Date.now();
-  const username = `usuario_teste_${timestamp}`;
-  const senha = 'SenhaTeste123';
+  const username = `jv`;
+  const senha = '123';
 
   it('Cenário Positivo 1: Registra novo usuário, faz login e cria carro com dados válidos', () => {
     // 1. Registro
