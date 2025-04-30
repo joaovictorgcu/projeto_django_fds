@@ -70,11 +70,23 @@ Nosso grupo passou por um momento complicado com a saída de alguns integrantes,
 <details>
 <summary><h2>Terceira Entrega</h2></summary>
 
+<<<<<<< Updated upstream
 ![backlog](<media/entregas/Backlog 2.jpg>)
 ![quadro](<media/entregas/sprint 2.jpg>)
+=======
+![backlog2](<media/entregas/Backlog 2.jpg>)
+![quadro2](<media/entregas/Quadro 2.jpg>)
+![bugTracker](<media/entregas/BugTracker2.jpg>)
+>>>>>>> Stashed changes
 
 - *Programação em Par (atualização-Entrega 3):*
 Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais frequência a técnica de programação em par. Essa abordagem mostrou-se especialmente eficaz na resolução de problemas complexos e na promoção de uma troca constante de ideias entre os membros. No entanto, optamos por não adotar essa prática em todas as etapas do desenvolvimento, alternando-a com o trabalho individual de acordo com as necessidades e características específicas de cada tarefa.
+
+- [ScreenCastFigma]
+
+- [ScreenCastAzure]
+
+- [ScreenCastTestes]
 
 </details>
 
