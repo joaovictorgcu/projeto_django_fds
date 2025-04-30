@@ -20,5 +20,8 @@
     "cypress": "^14.3.2",
     "cypress-file-upload": "^5.0.8"
   },
-  "keywords": []
+  "keywords": [],
+  "dependencies": {
+    "matchautos": "file:"
+  }
 }
