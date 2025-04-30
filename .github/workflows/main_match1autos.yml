@@ -40,6 +40,10 @@ jobs:
         run: |
           npm install cypress --save-dev
 
+      # ✅ NOVO: Corrigir permissões do Cypress
+      - name: Fix Cypress binary permissions
+        run: chmod +x ./node_modules/.bin/cypress
+
       # 👇 👈 ALTERADO: Iniciar servidor Django para testes
       - name: Run Django server in background
         run: |
