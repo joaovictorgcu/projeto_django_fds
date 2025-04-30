@@ -10,60 +10,55 @@ jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
+      contents: read
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python version
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.13'
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-
-      - name: Install dependencies
-        run: |
-          source venv/bin/activate
-          pip install -r requirements.txt
-
-      # 👇 Instala Node.js para permitir Cypress
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20' # Pode ser '18' ou '20'
+          node-version: '20'
 
-      # 👇 Instala o pacote Cypress
-      - name: Install Cypress
+      # ✅ Cache do Cypress para evitar download a cada build
+      - name: Cache Cypress binary
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/Cypress
+          key: cypress-cache-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            cypress-cache-${{ runner.os }}-
+
+      # ✅ Instalar Cypress globalmente e baixar o binário
+      - name: Install Cypress globally and binary
         run: |
-          npm install cypress --save-dev
+          npm install -g cypress
+          cypress install
 
-      # ✅ Instala o binário do Cypress (correção do erro de binary missing)
-      - name: Install Cypress binary
-        run: npx cypress install
+      - name: Create virtual environment and install Python dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-      # (Opcional) Corrige permissão do binário se necessário
-      - name: Fix Cypress binary permissions
-        run: chmod +x ./node_modules/.bin/cypress
-
-      # 👇 Inicia o servidor Django em segundo plano para os testes
       - name: Run Django server in background
         run: |
           source venv/bin/activate
           nohup python manage.py migrate &
           nohup python manage.py runserver 0.0.0.0:8000 &
 
-      # 👇 Roda os testes automatizados com Cypress
       - name: Run Cypress tests
-        run: npx cypress run
+        run: cypress run
 
       - name: Zip artifact for deployment
         run: zip -r release.zip ./*
 
-      - name: Upload artifact for deployment jobs
+      - name: Upload artifact for deployment
         uses: actions/upload-artifact@v4
         with:
           name: python-app
@@ -78,16 +73,16 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
-      - name: Download artifact from build job
+      - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: python-app
 
-      - name: Unzip artifact for deployment
+      - name: Unzip artifact
         run: unzip release.zip
 
       - name: Login to Azure
@@ -99,6 +94,7 @@ jobs:
 
       - name: Run collectstatic
         run: |
+          python -m venv venv
           source venv/bin/activate
           python manage.py collectstatic --noinput
 
