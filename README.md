@@ -15,6 +15,7 @@ Este projeto foi criado como parte da disciplina de Fundamentos de Desenvolvimen
 - **Interface**: HTML/CSS/JavaScript - Para a interface do usuário.
 - **Banco de dados**: Sqlite/PostgreSQL - Para armazenar informações.
 - **Hospedagem**: Azure - O produto final será hospedado na plataforma Azure.
+- **Framework de Testes**: Cypress. Os testes automatizados estão sendo feitos com auxílio do Cypress.
 
 ## Ferramentas
 
@@ -70,7 +71,7 @@ Nosso grupo passou por um momento complicado com a saída de alguns integrantes,
 <details>
 <summary><h2>Terceira Entrega</h2></summary>
 
-![backlog2](<media/entregas/Backlog 2.jpg>)
+![backlog2](<media/entregas/backlog 2 att.jpg>)
 ![quadro2](<media/entregas/Quadro 2 att.jpg>)
 ![bugTracker](<media/entregas/BugTracker2.jpg>)
 
@@ -81,7 +82,7 @@ Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais 
 
 - [ScreenCastFuncionalidades](https://youtu.be/ASoTy6qVJyg)
 
-- [ScreenCastCI/CD](https://youtu.be/d1S7LFm-hro)
+- [ScreenCastCI/CD](https://youtu.be/7F8RONHp6VQ)
 
 - [ScreenCastTesteAutomatizado](https://youtu.be/XqA0_-212Ao)
 
