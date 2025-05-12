@@ -1,7 +1,7 @@
 from interacoes.models import Favorito
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Comentario, Mensagem, Conversa, Chat
+from .models import Comentario, Mensagem, Conversa, Chat, Message
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from cars.models import Car, CarRating, Brand
