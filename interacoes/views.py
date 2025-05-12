@@ -1,15 +1,12 @@
-from django.shortcuts import redirect, get_object_or_404
 from interacoes.models import Favorito
-from cars.models import Car
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Comentario, Mensagem, Conversa
+from .models import Comentario, Mensagem, Conversa, Chat
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
 from django.contrib import messages
-from cars.models import Car, CarRating
-from django.contrib.auth.decorators import login_required
+from cars.models import Car, CarRating, Brand
 from django.db.models import Avg, Q
+from django.http import JsonResponse
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
@@ -38,12 +35,7 @@ def lista_favoritos(request):
     favoritos = Favorito.objects.filter(usuario=request.user)
     return render(request, 'lista_favoritos.html', {'favoritos': favoritos})
 
-
-
-from django.shortcuts import render, get_object_or_404
-from django.http import JsonResponse
-from .models import Comentario, Message, Chat
-from cars.models import Car,Brand  # certifique-se que está importando o modelo certo
+ # certifique-se que está importando o modelo certo
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)

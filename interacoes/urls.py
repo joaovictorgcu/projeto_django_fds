@@ -4,7 +4,6 @@ from cars.views import index_view, cars_view, new_car_view, meus_anuncios
 from .views import editar_carro_view, deletar_carro_view
 from django.conf import settings
 from django.conf.urls.static import static
-
 urlpatterns = [
     path('carro/<int:carro_id>/', views.detalhes_carro, name='detalhes_carro'),
     path('carro/<int:carro_id>/favoritar/', views.favoritar_carro, name='favoritar_carro'),
@@ -23,6 +22,8 @@ urlpatterns = [
     path('chat/<int:chat_id>/', views.chat_detail, name='chat_detail'),
     path('iniciar-chat/<int:carro_id>/', views.iniciar_chat, name='iniciar_chat'),
 ]
+
+
 
 
 if settings.DEBUG:
