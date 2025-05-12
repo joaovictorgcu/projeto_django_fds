@@ -1,16 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Mensagens{% endblock %}
+{% block title %}Todas Mensagens{% endblock %}
 
 {% block content %}
   <div class="mensagens-container">
-    <h1>Mensagens</h1>
+    <h1 class="titulo-centralizado">Todas Mensagens</h1>
 
     {% if user.is_superuser %}
-      <div class="aviso-superuser">
-       <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>Isso significa que você pode excluir ou visualizar todos os chats.</p>
+      <div class="aviso-superuser-centralizado">
+        <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>Isso significa que você pode excluir ou visualizar todos os chats.</p>
       </div>
-
     {% endif %}
 
     {% if chats_com_mensagens %}
@@ -34,7 +33,7 @@
         {% endfor %}
       </div>
     {% else %}
-      <p>Você não tem chats.</p>
+      <p>Não há chats disponíveis.</p>
     {% endif %}
   </div>
 
@@ -48,13 +47,18 @@
       box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
     }
 
-    .aviso-superuser {
+    .titulo-centralizado {
+      text-align: center;
+    }
+
+    .aviso-superuser-centralizado {
       background-color: #fff3cd;
       color: #856404;
       border: 1px solid #ffeeba;
       padding: 15px;
       margin-bottom: 20px;
       border-radius: 8px;
+      text-align: center;
     }
 
     .chats-list {
@@ -102,7 +106,6 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      width: auto; /* Ajustado para não quebrar o layout */
     }
 
     .btn-excluir:hover {

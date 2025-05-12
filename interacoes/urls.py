@@ -22,6 +22,8 @@ urlpatterns = [
     path('chat/<int:chat_id>/', views.chat_detail, name='chat_detail'),
     path('iniciar-chat/<int:carro_id>/', views.iniciar_chat, name='iniciar_chat'),
     path('todos-anuncios/', views.todos_anuncios, name='todos_anuncios'),
+    path('excluir-chat/<int:chat_id>/', views.excluir_chat, name='excluir_chat'),
+     path('todas-mensagens/', views.todas_mensagens, name='todas_mensagens'),
 ]
 
 

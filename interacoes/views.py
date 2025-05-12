@@ -246,16 +246,54 @@ def chat_detail(request, chat_id):
     return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})
 @login_required
 def minhas_mensagens(request):
-    # Pegar os chats onde o usuário é o comprador ou vendedor
-    chats = Chat.objects.filter(comprador=request.user) | Chat.objects.filter(vendedor=request.user)
+    # Verifica se o usuário é superusuário
+    if request.user.is_superuser:
+        # Superusuário vê todos os chats
+        chats = Chat.objects.all()
+    else:
+        # Usuário comum vê apenas os chats onde é comprador ou vendedor
+        chats = Chat.objects.filter(comprador=request.user) | Chat.objects.filter(vendedor=request.user)
 
     # Buscar as últimas mensagens de cada chat
     chats_com_mensagens = []
     for chat in chats:
-        last_message = chat.messages.order_by('-created_at').first()  # Obtem a última mensagem
+        last_message = chat.messages.order_by('-created_at').first()  # Obtém a última mensagem
         chats_com_mensagens.append({
             'chat': chat,
             'last_message': last_message
         })
 
     return render(request, 'minhas_mensagens.html', {'chats_com_mensagens': chats_com_mensagens})
+
+@login_required
+def excluir_chat(request, chat_id):
+    # Verifica se o usuário é superusuário
+    if not request.user.is_superuser:
+        return redirect('minhas_mensagens')  # Redireciona se não for superusuário
+    
+    # Recupera o chat a ser excluído
+    chat = get_object_or_404(Chat, id=chat_id)
+    
+    # Exclui o chat
+    chat.delete()
+    
+    # Redireciona para a página de mensagens
+    return redirect('minhas_mensagens')
+
+@login_required
+def todas_mensagens(request):
+    if not request.user.is_superuser:
+        return redirect('minhas_mensagens')
+
+    chats = Chat.objects.all()
+    chats_com_mensagens = []
+
+    for chat in chats:
+        ultima_mensagem = chat.messages.last()
+        if ultima_mensagem:
+            chats_com_mensagens.append({
+                'chat': chat,
+                'last_message': ultima_mensagem
+            })
+
+    return render(request, 'todas_mensagens.html', {'chats_com_mensagens': chats_com_mensagens})

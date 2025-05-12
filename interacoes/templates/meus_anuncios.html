@@ -78,6 +78,17 @@
       background: #d9534f;
     }
 
+    .aviso-superuser {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 10px;
+      margin: 20px auto;
+      max-width: 800px;
+      border-radius: 5px;
+      color: #856404;
+      font-size: 1rem;
+    }
+
     @media (max-width: 768px) {
       .car-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -92,6 +103,12 @@
       Meus Anúncios
     {% endif %}
   </h2>
+
+  {% if request.user.is_superuser %}
+    <div class="aviso-superuser">
+      <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>Isso significa que você pode excluir ou visualizar todos os chats.</p>
+    </div>
+  {% endif %}
 
   <div class="car-grid">
     {% if carros %}

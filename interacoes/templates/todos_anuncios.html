@@ -2,7 +2,11 @@
 {% load static %}
 
 {% block title %}
-  Todos os Anúncios
+  {% if request.user.is_superuser %}
+    Todos os Anúncios
+  {% else %}
+    Meus Anúncios
+  {% endif %}
 {% endblock %}
 
 {% block content %}
@@ -74,6 +78,18 @@
       background: #d9534f;
     }
 
+    .aviso-superuser {
+      background-color: #fff3cd;
+      border: 1px solid #ffeeba;
+      padding: 10px;
+      margin: 10px auto 20px auto;
+      max-width: 800px;
+      border-radius: 5px;
+      color: #856404;
+      font-size: 1rem;
+      text-align: center;
+    }
+
     @media (max-width: 768px) {
       .car-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -81,7 +97,20 @@
     }
   </style>
 
-  <h2 style="text-align: center; margin-top: 20px;">Todos os Anúncios</h2>
+  <h2 style="text-align: center; margin-top: 20px;">
+    {% if request.user.is_superuser %}
+      Todos os Anúncios
+    {% else %}
+      Meus Anúncios
+    {% endif %}
+  </h2>
+
+  {% if request.user.is_superuser %}
+    <div class="aviso-superuser">
+      <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>
+      Isso significa que você pode excluir ou visualizar todos os anúncios.</p>
+    </div>
+  {% endif %}
 
   <div class="car-grid">
     {% if carros %}
@@ -103,7 +132,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <p style="text-align: center;">Nenhum anúncio encontrado.</p>
+      <p style="text-align: center;">Você ainda não possui nenhum anúncio.</p>
     {% endif %}
   </div>
 {% endblock %}
