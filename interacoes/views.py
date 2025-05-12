@@ -69,35 +69,66 @@ def detalhes_carro(request, carro_id):
 
 @login_required
 def editar_carro_view(request, id):
-    carro = Car.objects.get(id=id, usuario=request.user)
+    try:
+        # Buscar o carro específico pelo ID
+        car = Car.objects.get(id=id)
+        
+        # Verificar se o carro pertence ao usuário ou se o usuário é superusuário
+        if not request.user.is_superuser and car.usuario != request.user:
+            return redirect("meus_anuncios")  # Redireciona para meus anúncios se não for o dono ou superusuário
+        
+    except Car.DoesNotExist:
+        return redirect("meus_anuncios")  # Caso o carro não exista, redireciona para meus anúncios
 
     if request.method == "POST":
-        carro.model = request.POST.get("model")
+        # Atualizar os campos do carro com os dados do formulário
+        car.model = request.POST.get("model")
         brand_id = request.POST.get("brand")
-        carro.brand = Brand.objects.get(id=brand_id)
-        carro.factory_year = request.POST.get("factory_year")
-        carro.model_year = request.POST.get("model_year")
-        carro.km = request.POST.get("km")
-        carro.value = request.POST.get("value")
-        
+        car.brand = Brand.objects.get(id=brand_id)
+        car.factory_year = request.POST.get("factory_year")
+        car.model_year = request.POST.get("model_year")
+        car.km = request.POST.get("km")
+        car.value = request.POST.get("value")
+
+        # Atualizar a foto apenas se uma nova imagem for enviada
         if request.FILES.get("photo"):
-            carro.photo = request.FILES.get("photo")
+            car.photo = request.FILES.get("photo")
 
-        carro.save()
-        return redirect("meus_anuncios")
+        car.save()
 
+        # Redireciona com base no status do usuário (superusuário ou não)
+        return redirect("meus_anuncios") if not request.user.is_superuser else redirect("todos_anuncios")
+
+    # Se o método não for POST, renderiza o formulário de edição
     brands = Brand.objects.all()
-    return render(request, 'editar_carro.html', {'carro': carro, 'brands': brands})
+    return render(request, 'editar_carro.html', {'carro': car, 'brands': brands})
+
 
 @login_required
 def deletar_carro_view(request, id):
-    carro = Car.objects.get(id=id, usuario=request.user)
+    if request.user.is_superuser:
+        carro = get_object_or_404(Car, id=id)
+    else:
+        carro = get_object_or_404(Car, id=id, usuario=request.user)
+
     carro.delete()
-    return redirect("meus_anuncios")
+    return redirect("meus_anuncios") if not request.user.is_superuser else redirect("todos_anuncios")
+
+@login_required
+def todos_anuncios(request):
+    if not request.user.is_superuser:
+        return redirect("meus_anuncios")  # redireciona caso não seja admin
+
+    carros = Car.objects.all()
+    return render(request, 'todos_anuncios.html', {'carros': carros})
 
 @login_required
 def meus_anuncios(request):
-    carros = Car.objects.filter(usuario=request.user) 
+    if request.user.is_superuser:
+        carros = Car.objects.all()
+    else:
+        carros = Car.objects.filter(usuario=request.user)
+
     return render(request, 'meus_anuncios.html', {'carros': carros})
 
 @login_required

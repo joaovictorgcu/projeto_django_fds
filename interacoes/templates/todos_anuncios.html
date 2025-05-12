@@ -2,11 +2,7 @@
 {% load static %}
 
 {% block title %}
-  {% if request.user.is_superuser %}
-    Todos os Anúncios
-  {% else %}
-    Meus Anúncios
-  {% endif %}
+  Todos os Anúncios
 {% endblock %}
 
 {% block content %}
@@ -85,13 +81,7 @@
     }
   </style>
 
-  <h2 style="text-align: center; margin-top: 20px;">
-    {% if request.user.is_superuser %}
-      Todos os Anúncios
-    {% else %}
-      Meus Anúncios
-    {% endif %}
-  </h2>
+  <h2 style="text-align: center; margin-top: 20px;">Todos os Anúncios</h2>
 
   <div class="car-grid">
     {% if carros %}
@@ -113,7 +103,7 @@
         </div>
       {% endfor %}
     {% else %}
-      <p style="text-align: center;">Você ainda não possui nenhum anúncio.</p>
+      <p style="text-align: center;">Nenhum anúncio encontrado.</p>
     {% endif %}
   </div>
 {% endblock %}
