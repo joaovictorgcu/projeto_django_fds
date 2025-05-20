@@ -267,18 +267,14 @@ def minhas_mensagens(request):
 
 @login_required
 def excluir_chat(request, chat_id):
-    # Verifica se o usuário é superusuário
-    if not request.user.is_superuser:
-        return redirect('minhas_mensagens')  # Redireciona se não for superusuário
-    
-    # Recupera o chat a ser excluído
     chat = get_object_or_404(Chat, id=chat_id)
-    
-    # Exclui o chat
-    chat.delete()
-    
-    # Redireciona para a página de mensagens
-    return redirect('minhas_mensagens')
+
+    # Permitir exclusão apenas se o usuário for superusuário, comprador ou vendedor
+    if request.user == chat.comprador or request.user == chat.vendedor or request.user.is_superuser:
+        chat.delete()
+        return redirect('minhas_mensagens')  # Redirecione para a view correta
+    else:
+        return HttpResponseForbidden("Você não tem permissão para excluir este chat.")
 
 @login_required
 def todas_mensagens(request):

@@ -8,9 +8,9 @@
 
     {% if user.is_superuser %}
       <div class="aviso-superuser">
-       <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>Isso significa que você pode excluir ou visualizar todos os chats.</p>
+        <p><strong>Aviso:</strong> Você está visualizando esta página como administrador.<br>
+        Isso significa que você pode excluir ou visualizar todos os chats.</p>
       </div>
-
     {% endif %}
 
     {% if chats_com_mensagens %}
@@ -24,7 +24,7 @@
             <p><small>Enviada em: {{ chat_item.last_message.created_at|date:"d/m/Y H:i" }}</small></p>
             <a href="{% url 'chat_detail' chat_item.chat.id %}" class="btn-chat">Ver Chat</a>
 
-            {% if user.is_superuser %}
+            {% if user.is_superuser or user == chat_item.chat.comprador or user == chat_item.chat.vendedor %}
               <form action="{% url 'excluir_chat' chat_item.chat.id %}" method="post" style="display:inline;">
                 {% csrf_token %}
                 <button type="submit" class="btn-excluir">Excluir Chat</button>
@@ -102,7 +102,7 @@
       text-decoration: none;
       border: none;
       cursor: pointer;
-      width: auto; /* Ajustado para não quebrar o layout */
+      width: auto;
     }
 
     .btn-excluir:hover {
