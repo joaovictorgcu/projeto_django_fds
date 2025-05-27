@@ -57,3 +57,10 @@ class Message(models.Model):
 
     def __str__(self):
         return f'Mensagem de {self.sender.username} em {self.created_at}'
+    
+class TestDrive(models.Model):
+    comprador = models.ForeignKey(User, on_delete=models.CASCADE, related_name='test_drives')
+    carro = models.ForeignKey(Car, on_delete=models.CASCADE)
+    data_hora = models.DateTimeField()
+    mensagem = models.TextField(blank=True)
+    criado_em = models.DateTimeField(auto_now_add=True)

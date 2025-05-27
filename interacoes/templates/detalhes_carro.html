@@ -8,56 +8,59 @@
       <img src="{{ carro.photo.url }}" alt="{{ carro.model }}" class="car-img">
     {% endif %}
 
-    <h1 style="margin-top: 20px;">{{ carro.model }}</h1>
-    <p><strong>Marca:</strong> {{ carro.brand.name }}</p>
-    <p><strong>Ano de Fabricação:</strong> {{ carro.factory_year }}</p>
-    <p><strong>Ano do Modelo:</strong> {{ carro.model_year }}</p>
-    <p><strong>KM:</strong> {{ carro.km|default:"N/A" }} km</p>
-    <p><strong>Valor:</strong> R$ {{ carro.value|floatformat:2 }}</p>
+    <h1 class="car-title">{{ carro.model }}</h1>
+    <p class="media-avaliacao-title">Média: <strong>{{ carro.rating }}</strong> / 5 ({{ carro.ratings.count }} votos)</p>
+
+    <div class="car-info">
+      <p><strong>Marca:</strong> {{ carro.brand.name }}</p>
+      <p><strong>Ano de Fabricação:</strong> {{ carro.factory_year }}</p>
+      <p><strong>Ano do Modelo:</strong> {{ carro.model_year }}</p>
+      <p><strong>KM:</strong> {{ carro.km|default:"N/A" }} km</p>
+      <p><strong>Valor:</strong> <span class="car-price">R$ {{ carro.value|floatformat:2 }}</span></p>
+    </div>
 
     {% if user.is_authenticated %}
-      <div class="mt-4 flex items-center justify-center gap-4 flex-wrap">
-        {# --- botão de favorito / desfavorito --- #}
-        <a href="{% url 'toggle_favorito' carro.id %}"
-           class="{% if ja_favoritado %}ja-favoritado-btn{% else %}favorito-btn{% endif %}">
-           {% if ja_favoritado %}💔 Remover dos Favoritos{% else %}❤️ Adicionar aos Favoritos{% endif %}
-        </a>
+      <div class="actions-container">
+        <div class="action-buttons">
+          <a href="{% url 'toggle_favorito' carro.id %}"
+             class="{% if ja_favoritado %}ja-favoritado-btn{% else %}favorito-btn{% endif %}">
+             {% if ja_favoritado %}💔 Remover dos Favoritos{% else %}❤️ Adicionar aos Favoritos{% endif %}
+          </a>
 
-        {# --- formulário de avaliação --- #}
-        <form action="{% url 'rate_car' carro.id %}" method="post" class="flex items-center gap-2">
+          {% if user != carro.usuario %}
+            <a href="{% url 'iniciar_chat' carro.id %}" class="mensagem-btn">💬 Iniciar conversa com o vendedor</a>
+          {% endif %}
+        </div>
+
+        <form action="{% url 'rate_car' carro.id %}" method="post" class="avaliar-form">
           {% csrf_token %}
-          <label for="score" class="text-sm font-bold"><strong>Avalie:</strong></label>
-          <select name="score" id="score" class="border rounded p-1">
+          <label for="score"><strong>Avalie:</strong></label>
+          <select name="score" id="score">
             {% for i in "012345" %}
               <option value="{{ i }}">{{ i }}</option>
             {% endfor %}
           </select>
-
-          {# botão de avaliação --- #}
-          <button type="submit" class="avaliar-btn">
-            ⭐ Enviar
-          </button>
+          <button type="submit" class="avaliar-btn">⭐ Enviar</button>
         </form>
-
-        {# Exibir média de avaliação --- #}
-        <p class="media-avaliacao mt-2">
-          Média: <strong>{{ carro.rating }}</strong> / 5 ({{ carro.ratings.count }} votos)
-        </p>
-
-        {# Iniciar chat com o vendedor --- #}
-        {% if user.is_authenticated and user != carro.usuario %}
-            <a href="{% url 'iniciar_chat' carro.id %}" class="mensagem-btn">Iniciar conversa com o vendedor</a>
-          </div>
-        {% endif %}
       </div>
+
+      {% if user != carro.usuario %}
+        <div class="agendar-container">
+          <form action="{% url 'agendar_test_drive' carro.id %}" method="post" onsubmit="enviarMensagem(event)">
+            {% csrf_token %}
+            <label for="data_visita">📅 Agendar Test Drive:</label>
+            <input type="date" name="data_visita" id="data_visita" required>
+            <button type="submit" class="avaliar-btn">Agendar</button>
+          </form>
+        </div>
+      {% endif %}
     {% else %}
-      <p class="text-sm italic mt-4">Entre para favoritar ou avaliar este carro.</p>
+      <p class="text-sm italic mt-4">Entre para favoritar, avaliar ou agendar visita.</p>
     {% endif %}
   </div>
 
-  {# ---------- COMENTÁRIOS ---------- #}
   <div class="comentarios-container">
-    <h3>Comentários Públicos</h3>
+    <h3>🗨️ Comentários Públicos</h3>
 
     {% if user.is_authenticated %}
       <form id="comentario-form" method="post" class="comentario-form">
@@ -105,112 +108,172 @@
         }
       });
     }
+
+    function enviarMensagem(event) {
+      const data = document.getElementById("data_visita").value;
+      if (data) {
+        const mensagem = `Olá! Gostaria de agendar um test drive para o dia ${data}.`;
+        const chatLink = document.querySelector(".mensagem-btn");
+        if (chatLink) {
+          const url = chatLink.href + `?mensagem=${encodeURIComponent(mensagem)}`;
+          chatLink.href = url;
+        }
+      }
+    }
   </script>
 
   <style>
     .car-container {
       background-color: #fff;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
-      max-width: 700px;
-      margin: 0 auto;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+      max-width: 800px;
+      margin: 30px auto;
       text-align: center;
     }
     .car-img {
-      max-width: 100%; height: auto; border-radius: 12px;
-      margin-bottom: 20px; object-fit: cover; max-height: 500px;
+      width: 100%;
+      max-height: 460px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 25px;
     }
+    .car-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+    .media-avaliacao-title {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+    .car-info p {
+      margin: 4px 0;
+      font-size: 16px;
+    }
+    .car-price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #198754;
+    }
+
+    .actions-container {
+      margin-top: 25px;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .favorito-btn,
+    .ja-favoritado-btn,
+    .mensagem-btn,
+    .avaliar-btn {
+      padding: 10px 20px;
+      min-width: 220px;
+      border-radius: 8px;
+      text-align: center;
+      font-weight: 600;
+      text-decoration: none;
+      color: white;
+      transition: background 0.2s ease;
+    }
+
     .favorito-btn {
-      background-color: #d62828; color: #fff; padding: 10px 18px;
-      border-radius: 8px; text-decoration: none;
+      background-color: #dc3545;
     }
-    .favorito-btn:hover { background-color: #a4161a; }
+    .favorito-btn:hover {
+      background-color: #a71d2a;
+    }
 
     .ja-favoritado-btn {
-      background-color: #2d6a4f; color: #fff; padding: 10px 18px;
-      border-radius: 8px; font-weight: bold; opacity: .9; cursor: pointer;
-      text-decoration: none;
+      background-color: #198754;
     }
-    .ja-favoritado-btn:hover { opacity: 1; }
-
-    .comentarios-container {
-      max-width: 700px; margin: 40px auto 0; background: #fff;
-      padding: 20px 30px; border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
-    }
-    .comentario-form textarea {
-      width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ccc;
-      resize: none; margin-bottom: 10px;
-    }
-    .comentario-form button {
-      background-color: #d62828; color: #fff; padding: 10px 16px;
-      border: none; border-radius: 8px; cursor: pointer;
-    }
-    .comentario-form button:hover { background-color: #a4161a; }
-
-    .comentarios-lista { list-style: none; padding: 0; margin-top: 20px; }
-    .comentarios-lista li {
-      background: #f2f2f2; padding: 12px; border-radius: 8px; margin-bottom: 12px;
-    }
-
-    .car-container .flex {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .car-container .favorito-btn, .car-container .ja-favoritado-btn {
-      margin-top: 20px;
-      display: inline-block;
-    }
-
-    .car-container form {
-      display: inline-block;
-      margin-top: 20px;
-    }
-
-    .media-avaliacao {
-      font-size: 14px;
-      margin-top: 20px;
-    }
-
-    .avaliar-btn {
-      background: linear-gradient(135deg, #2563eb, #3b82f6);
-      color: #fff;
-      padding: 8px 18px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      transition: transform .2s, box-shadow .2s;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .avaliar-btn:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,.25);
-      transform: translateY(-2px);
-    }
-    .avaliar-btn:active {
-      transform: translateY(0);
-      box-shadow: 0 2px 6px rgba(0,0,0,.2);
-    }
-
-    .mensagem-container {
-      max-width: 700px;
-      margin: 40px auto 0;
-      background: #fff;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+    .ja-favoritado-btn:hover {
+      background-color: #146c43;
     }
 
     .mensagem-btn {
-      background-color: #28a745; color: #fff; padding: 10px 18px;
-      border-radius: 8px; text-decoration: none;
+      background-color: #0d6efd;
     }
-    .mensagem-btn:hover { background-color: #218838; }
+    .mensagem-btn:hover {
+      background-color: #0b5ed7;
+    }
+
+    .avaliar-form {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .avaliar-btn {
+      background: linear-gradient(to right, #2563eb, #3b82f6);
+      border: none;
+      cursor: pointer;
+    }
+
+    .agendar-container {
+      margin-top: 30px;
+    }
+
+    input[type="date"] {
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      margin-right: 10px;
+    }
+
+    .comentarios-container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
+      max-width: 800px;
+      margin: 30px auto;
+    }
+
+    .comentario-form textarea {
+      width: 100%;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      margin-bottom: 10px;
+    }
+
+    .comentario-form button {
+      background-color: #0d6efd;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .comentario-form button:hover {
+      background-color: #0b5ed7;
+    }
+
+    .comentarios-lista {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .comentarios-lista li {
+      background: #f9f9f9;
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
   </style>
 {% endblock %}

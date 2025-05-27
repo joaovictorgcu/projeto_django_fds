@@ -4,9 +4,10 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Comentario, Mensagem, Conversa, Chat, Message
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from cars.models import Car, CarRating, Brand
+from cars.models import Car,CarRating, Brand
 from django.db.models import Avg, Q
 from django.http import JsonResponse
+from datetime import datetime
 
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
@@ -293,3 +294,46 @@ def todas_mensagens(request):
             })
 
     return render(request, 'todas_mensagens.html', {'chats_com_mensagens': chats_com_mensagens})
+
+
+@login_required
+def agendar_test_drive(request, carro_id):
+    carro = get_object_or_404(Car, id=carro_id)
+    vendedor = carro.usuario
+
+    if request.user == vendedor:
+        messages.warning(request, "Você não pode agendar um test drive com seu próprio veículo.")
+        return redirect('detalhes_carro', carro_id=carro_id)
+
+    if request.method == 'POST':
+        data_visita = request.POST.get('data_visita')
+
+        if not data_visita:
+            messages.error(request, "Por favor, selecione a data.")
+            return redirect('detalhes_carro', carro_id=carro_id)
+
+        # Converte a data para o formato dd-mm-aaaa
+        try:
+            data_formatada = datetime.strptime(data_visita, "%Y-%m-%d").strftime("%d-%m-%Y")
+        except ValueError:
+            messages.error(request, "Data inválida.")
+            return redirect('detalhes_carro', carro_id=carro_id)
+
+        # Cria ou recupera o chat com o vendedor
+        chat, _ = Chat.objects.get_or_create(
+            car=carro,
+            comprador=request.user,
+            vendedor=vendedor
+        )
+
+        # Envia mensagem automática
+        Message.objects.create(
+            chat=chat,
+            sender=request.user,
+            text=f"Olá! Agendei um test drive para o dia {data_formatada}."
+        )
+
+        messages.success(request, f"Test drive agendado com sucesso para {data_formatada}. O vendedor foi notificado.")
+        return redirect('chat_detail', chat_id=chat.id)
+
+    return redirect('detalhes_carro', carro_id=carro_id)
