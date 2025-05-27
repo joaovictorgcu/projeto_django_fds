@@ -36,8 +36,6 @@ def lista_favoritos(request):
     favoritos = Favorito.objects.filter(usuario=request.user)
     return render(request, 'lista_favoritos.html', {'favoritos': favoritos})
 
- # certifique-se que está importando o modelo certo
-
 def detalhes_carro(request, carro_id):
     carro = get_object_or_404(Car, id=carro_id)
 
@@ -71,18 +69,15 @@ def detalhes_carro(request, carro_id):
 @login_required
 def editar_carro_view(request, id):
     try:
-        # Buscar o carro específico pelo ID
         car = Car.objects.get(id=id)
-        
-        # Verificar se o carro pertence ao usuário ou se o usuário é superusuário
+    
         if not request.user.is_superuser and car.usuario != request.user:
-            return redirect("meus_anuncios")  # Redireciona para meus anúncios se não for o dono ou superusuário
+            return redirect("meus_anuncios") 
         
     except Car.DoesNotExist:
-        return redirect("meus_anuncios")  # Caso o carro não exista, redireciona para meus anúncios
+        return redirect("meus_anuncios") 
 
     if request.method == "POST":
-        # Atualizar os campos do carro com os dados do formulário
         car.model = request.POST.get("model")
         brand_id = request.POST.get("brand")
         car.brand = Brand.objects.get(id=brand_id)
@@ -91,16 +86,14 @@ def editar_carro_view(request, id):
         car.km = request.POST.get("km")
         car.value = request.POST.get("value")
 
-        # Atualizar a foto apenas se uma nova imagem for enviada
+
         if request.FILES.get("photo"):
             car.photo = request.FILES.get("photo")
 
         car.save()
 
-        # Redireciona com base no status do usuário (superusuário ou não)
         return redirect("meus_anuncios") if not request.user.is_superuser else redirect("todos_anuncios")
 
-    # Se o método não for POST, renderiza o formulário de edição
     brands = Brand.objects.all()
     return render(request, 'editar_carro.html', {'carro': car, 'brands': brands})
 
@@ -118,7 +111,7 @@ def deletar_carro_view(request, id):
 @login_required
 def todos_anuncios(request):
     if not request.user.is_superuser:
-        return redirect("meus_anuncios")  # redireciona caso não seja admin
+        return redirect("meus_anuncios")  
 
     carros = Car.objects.all()
     return render(request, 'todos_anuncios.html', {'carros': carros})
@@ -178,7 +171,6 @@ def enviar_mensagem(request, carro_id):
         carro = get_object_or_404(Car, id=carro_id)
         conteudo = request.POST.get('conteudo')
 
-        # Evita que o vendedor envie mensagem para si mesmo
         if carro.usuario == request.user:
             return redirect('detalhes_carro', carro_id=carro_id)
 
@@ -189,7 +181,6 @@ def enviar_mensagem(request, carro_id):
             conteudo=conteudo
         )
 
-        # Redireciona com uma mensagem de sucesso (se desejar usar messages)
         return redirect('detalhes_carro', carro_id=carro_id)
     
 
@@ -208,7 +199,6 @@ def iniciar_chat(request, carro_id):
     carro = Car.objects.get(id=carro_id)
     vendedor = carro.usuario
 
-    # Verifica se o usuário já tem um chat com o vendedor para este carro
     chat, created = Chat.objects.get_or_create(
         car=carro,
         comprador=request.user,
@@ -216,14 +206,12 @@ def iniciar_chat(request, carro_id):
     )
 
     if created:
-        # Se o chat foi criado, você pode adicionar uma mensagem de boas-vindas
         Message.objects.create(
             chat=chat,
             sender=request.user,
             text="Olá, gostaria de saber mais sobre o carro!"
         )
 
-    # Redireciona o usuário para a página de chat
     return redirect('chat_detail', chat_id=chat.id)
 
 @login_required
@@ -231,34 +219,27 @@ def chat_detail(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
 
     if request.method == 'POST':
-        message_text = request.POST.get('message_text')  # Usando .get() para garantir que não cause erro caso o campo não exista
-        # Cria a nova mensagem
+        message_text = request.POST.get('message_text') 
         Message.objects.create(
             chat=chat,
             sender=request.user,
             text=message_text
         )
-        # Redireciona para o chat com a nova mensagem
         return redirect('chat_detail', chat_id=chat.id)
 
-    # Buscar todas as mensagens do chat
     messages = chat.messages.order_by('created_at')
 
     return render(request, 'chat_detail.html', {'chat': chat, 'messages': messages})
 @login_required
 def minhas_mensagens(request):
-    # Verifica se o usuário é superusuário
     if request.user.is_superuser:
-        # Superusuário vê todos os chats
         chats = Chat.objects.all()
     else:
-        # Usuário comum vê apenas os chats onde é comprador ou vendedor
         chats = Chat.objects.filter(comprador=request.user) | Chat.objects.filter(vendedor=request.user)
 
-    # Buscar as últimas mensagens de cada chat
     chats_com_mensagens = []
     for chat in chats:
-        last_message = chat.messages.order_by('-created_at').first()  # Obtém a última mensagem
+        last_message = chat.messages.order_by('-created_at').first()
         chats_com_mensagens.append({
             'chat': chat,
             'last_message': last_message
@@ -270,10 +251,9 @@ def minhas_mensagens(request):
 def excluir_chat(request, chat_id):
     chat = get_object_or_404(Chat, id=chat_id)
 
-    # Permitir exclusão apenas se o usuário for superusuário, comprador ou vendedor
     if request.user == chat.comprador or request.user == chat.vendedor or request.user.is_superuser:
         chat.delete()
-        return redirect('minhas_mensagens')  # Redirecione para a view correta
+        return redirect('minhas_mensagens')
     else:
         return HttpResponseForbidden("Você não tem permissão para excluir este chat.")
 
