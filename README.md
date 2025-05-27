@@ -88,6 +88,34 @@ Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais 
 
 </details>
 
+<details>
+<summary><h2>Quarta Entrega</h2></summary>
+
+![backlog3](media/entregas/backlog3.jpg)
+![quadro3](media/entregas/quadro3.jpg)
+![bugTracker3](media/entregas/Bugtracker3.jpg)
+
+- *Programação em Par (atualização-Entrega 4):*
+Com o avanço do projeto, a programação em par foi se tornando uma prática cada vez mais natural para nós, principalmente nos momentos em que surgiam dúvidas ou problemas mais difíceis. Nessas horas, trabalhar em dupla acelerava a busca por soluções e deixava o processo menos estressante. Ao mesmo tempo, aprendemos a equilibrar: quando a tarefa exigia mais concentração, cada um seguia sozinho.
+Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualidade do código quanto no entrosamento do grupo. No final, sentimos que a programação em par não só ajudou a superar desafios técnicos, mas também fortaleceu a confiança entre os membros da equipe.
+
+<p align="center">
+  <a href="" target="_blank">
+    <img src="https://img.shields.io/badge/▶️%20Screencast%20CI/CD-blue?style=for-the-badge" alt="Screencast CI/CD">
+  </a>
+  <a href="" target="_blank">
+    <img src="https://img.shields.io/badge/▶️%20Screencast%20Testes-green?style=for-the-badge" alt="Screencast Testes">
+  </a>
+  <a href="" target="_blank">
+    <img src="https://img.shields.io/badge/▶️%20Screencast%20Figma-orange?style=for-the-badge" alt="Screencast Figma">
+  </a>
+  <a href="" target="_blank">
+    <img src="https://img.shields.io/badge/▶️%20Screencast%20Azure-purple?style=for-the-badge" alt="Screencast Azure">
+  </a>
+</p>
+
+</details>
+
 ## Equipe
 
 - [Pablo José Pellegrino Cintra](https://github.com/PabloJPCintra) - pjpc@cesar.school
