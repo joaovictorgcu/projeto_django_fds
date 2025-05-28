@@ -1,4 +1,24 @@
+
+
+<details>
+<summary><h2>Quarta Entrega</h2></summary>
+
+![backlog3](media/entregas/backlog3.jpg)
+![quadro3](media/entregas/quadro3.jpg)
+![bugTracker3](media/entregas/Bugtracker%203%20att.jpg)
+> <strong>IMPORTANTE:</strong><br>
+> <em>NOVO LINK DO SITE:</em><br>
+> <a href="https://match3autos.azurewebsites.net" target="_blank">https://match3autos.azurewebsites.net</a><br><br>
+> Colocar no <code>read.me</code> login e senha de adm para o monitor testar as novas funções de administrador.<br>
+> <strong>Login:</strong> adm &nbsp;&nbsp;&nbsp;&nbsp;<strong>Senha:</strong> 123
+
+
+- *Programação em Par (atualização-Entrega 4):*
+Com o avanço do projeto, a programação em par foi se tornando uma prática cada vez mais natural para nós, principalmente nos momentos em que surgiam dúvidas ou problemas mais difíceis. Nessas horas, trabalhar em dupla acelerava a busca por soluções e deixava o processo menos estressante. Ao mesmo tempo, aprendemos a equilibrar: quando a tarefa exigia mais concentração, cada um seguia sozinho.
+Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualidade do código quanto no entrosamento do grupo. No final, sentimos que a programação em par não só ajudou a superar desafios técnicos, mas também fortaleceu a confiança entre os membros da equipe.
+
 <p align="center">
+  <a href="https://youtu.be/y9vwD9Z30DM" target="<p align="center">
   <img src="media/cars/MatchAuto_Logo.png" alt="MatchAuto Logo">
 </p>
 
@@ -86,21 +106,7 @@ Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais 
 
 - [ScreenCastTesteAutomatizado](https://youtu.be/XqA0_-212Ao)
 
-</details>
-
-<details>
-<summary><h2>Quarta Entrega</h2></summary>
-
-![backlog3](media/entregas/backlog3.jpg)
-![quadro3](media/entregas/quadro3.jpg)
-![bugTracker3](media/entregas/Bugtracker%203%20att.jpg)
-
-- *Programação em Par (atualização-Entrega 4):*
-Com o avanço do projeto, a programação em par foi se tornando uma prática cada vez mais natural para nós, principalmente nos momentos em que surgiam dúvidas ou problemas mais difíceis. Nessas horas, trabalhar em dupla acelerava a busca por soluções e deixava o processo menos estressante. Ao mesmo tempo, aprendemos a equilibrar: quando a tarefa exigia mais concentração, cada um seguia sozinho.
-Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualidade do código quanto no entrosamento do grupo. No final, sentimos que a programação em par não só ajudou a superar desafios técnicos, mas também fortaleceu a confiança entre os membros da equipe.
-
-<p align="center">
-  <a href="https://youtu.be/y9vwD9Z30DM" target="_blank">
+</details>_blank">
     <img src="https://img.shields.io/badge/▶️%20Screencast%20CI/CD-blue?style=for-the-badge" alt="Screencast CI/CD">
   </a>
   <a href="https://youtu.be/XC_sxcnWlZk " target="_blank">
