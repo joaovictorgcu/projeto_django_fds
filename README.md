@@ -109,7 +109,7 @@ Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualida
   <a href="https://youtu.be/88nuYd10EAs" target="_blank">
     <img src="https://img.shields.io/badge/▶️%20Screencast%20Figma-orange?style=for-the-badge" alt="Screencast Figma">
   </a>
-  <a href="" target="_blank">
+  <a href="https://youtu.be/XC_sxcnWlZk " target="_blank">
     <img src="https://img.shields.io/badge/▶️%20Screencast%20Azure-purple?style=for-the-badge" alt="Screencast Azure">
   </a>
 </p>
