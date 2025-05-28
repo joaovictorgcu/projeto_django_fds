@@ -1,4 +1,4 @@
-name: Build and deploy Python app to Azure Web App
+name: Build and deploy Python app to Azure Web App - match2autos
 
 on:
   push:
@@ -7,68 +7,96 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20'
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
 
-    - name: Install Python dependencies
-      run: pip install -r requirements.txt
+      - name: Create virtual environment
+        run: |
+          python -m venv venv
+          source venv/bin/activate
 
-    - name: Install Node.js dependencies
-      run: npm install
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          npm ci
 
-    - name: Run Cypress tests on production
-      run: |
-        npx wait-on https://match2autos.azurewebsites.net
-        npx cypress run --config baseUrl=https://match2autos.azurewebsites.net
+      - name: Apply migrations and start server
+        run: |
+          cd MATCHAUTOS
+          python manage.py migrate
+          nohup python manage.py runserver 0.0.0.0:8000 &
+          sleep 10
+          npx wait-on http://localhost:8000
+          cd ..
+
+      - name: Run Cypress tests
+        run: |
+          npx cypress run --config baseUrl=http://localhost:8000
+
+      - name: Clean test files
+        run: |
+          rm -f MATCHAUTOS/.env
+          rm -f cypress.config.js
+          rm -f package-lock.json
+          rm -f package.json
+          rm -rf cypress
+
+      - name: Zip artifact for deployment
+        run: |
+          cd MATCHAUTOS
+          zip -r ../release.zip ./*
+          cd ..
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-app
+          path: |
+            release.zip
+            !venv/
 
   deploy:
     runs-on: ubuntu-latest
-    needs: build-and-test  # Só executa se os testes passarem
+    needs: build
+    environment:
+      name: 'Production'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    permissions:
+      id-token: write
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: python-app
 
-    - name: Setup Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.9'
+      - name: Unzip artifact
+        run: unzip release.zip
 
-    - name: Install Python dependencies
-      run: pip install -r requirements.txt
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID }}
 
-    - name: Clean sensitive/testing files
-      run: |
-        cd MATCHAUTOS/
-        rm -f db.sqlite3
-        rm -f .env
-        cd ..
-
-    - name: Zip artifact for deployment
-      run: |
-        cd MATCHAUTOS/
-        zip release.zip ./* -r
-        cd ..
-        mv MATCHAUTOS/release.zip .
-
-    - name: Deploy to Azure Web App
-      uses: azure/webapps-deploy@v2
-      with:
-        app-name: 'match2autos'
-        slot-name: 'production'
-        publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE }}
-        package: release.zip
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        id: deploy-to-webapp
+        with:
+          app-name: 'match2autos'
+          slot-name: 'Production'
+          package: release.zip
