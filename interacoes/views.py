@@ -304,8 +304,6 @@ def agendar_test_drive(request, carro_id):
             comprador=request.user,
             vendedor=vendedor
         )
-
-        # Envia mensagem automática
         Message.objects.create(
             chat=chat,
             sender=request.user,
