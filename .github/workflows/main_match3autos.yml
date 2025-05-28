@@ -58,8 +58,18 @@ jobs:
       - name: Run Cypress tests
         run: npx cypress run
 
-      - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
+      - name: Zip artifact for deployment (optimized)
+        run: |
+          zip -r release.zip . -x \
+            "venv/*" \
+            "node_modules/*" \
+            ".git/*" \
+            "*.pyc" \
+            "__pycache__/*" \
+            "*.sqlite3" \
+            "*.log" \
+            "*.zip" \
+            ".github/*"
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
