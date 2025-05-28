@@ -3,7 +3,7 @@ name: Build and deploy Python app to Azure Web App
 on:
   push:
     branches:
-      - main  # Branch de produção
+      - main
   workflow_dispatch:
 
 jobs:
@@ -19,10 +19,31 @@ jobs:
       with:
         python-version: '3.9'
 
-    - name: Install dependencies
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '20'
+
+    - name: Install Python dependencies
       run: pip install -r requirements.txt
 
-    - name: Cleaning testing files
+    - name: Install Node.js dependencies
+      run: npm install
+
+    - name: Run Django locally
+      run: |
+        cd MATCHAUTOS/
+        python manage.py migrate
+        python manage.py runserver 0.0.0.0:8000 &
+        cd ..
+
+    - name: Wait for Django to start
+      run: npx wait-on http://localhost:8000
+
+    - name: Run Cypress tests
+      run: npx cypress run
+
+    - name: Clean testing files
       run: |
         cd MATCHAUTOS/
         rm -f db.sqlite3
