@@ -35,12 +35,10 @@ jobs:
 
       - name: Apply migrations and start server
         run: |
-          cd MATCHAUTOS
           python manage.py migrate
           nohup python manage.py runserver 0.0.0.0:8000 &
           sleep 10
           npx wait-on http://localhost:8000
-          cd ..
 
       - name: Run Cypress tests
         run: |
@@ -48,7 +46,7 @@ jobs:
 
       - name: Clean test files
         run: |
-          rm -f MATCHAUTOS/.env
+          rm -f .env
           rm -f cypress.config.js
           rm -f package-lock.json
           rm -f package.json
@@ -56,17 +54,13 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          cd MATCHAUTOS
-          zip -r ../release.zip ./*
-          cd ..
+          zip -r release.zip . -x "venv/*"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: python-app
-          path: |
-            release.zip
-            !venv/
+          path: release.zip
 
   deploy:
     runs-on: ubuntu-latest
