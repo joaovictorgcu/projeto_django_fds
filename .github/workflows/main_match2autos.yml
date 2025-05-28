@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build-and-test:
     runs-on: ubuntu-latest
 
     steps:
@@ -30,20 +30,28 @@ jobs:
     - name: Install Node.js dependencies
       run: npm install
 
-    - name: Run Django locally
+    - name: Run Cypress tests on production
       run: |
-        cd MATCHAUTOS/
-        python manage.py migrate
-        python manage.py runserver 0.0.0.0:8000 &
-        cd ..
+        npx wait-on https://match2autos.azurewebsites.net
+        npx cypress run --config baseUrl=https://match2autos.azurewebsites.net
 
-    - name: Wait for Django to start
-      run: npx wait-on http://localhost:8000
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build-and-test  # Só executa se os testes passarem
 
-    - name: Run Cypress tests
-      run: npx cypress run
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
 
-    - name: Clean testing files
+    - name: Setup Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'
+
+    - name: Install Python dependencies
+      run: pip install -r requirements.txt
+
+    - name: Clean sensitive/testing files
       run: |
         cd MATCHAUTOS/
         rm -f db.sqlite3
