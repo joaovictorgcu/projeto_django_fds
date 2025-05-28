@@ -6,11 +6,7 @@
 ![backlog3](media/entregas/backlog3.jpg)
 ![quadro3](media/entregas/quadro3.jpg)
 ![bugTracker3](media/entregas/Bugtracker%203%20att.jpg)
-> <strong>IMPORTANTE:</strong><br>
-> <em>NOVO LINK DO SITE:</em><br>
-> <a href="https://match3autos.azurewebsites.net" target="_blank">https://match3autos.azurewebsites.net</a><br><br>
-> Colocar no <code>read.me</code> login e senha de adm para o monitor testar as novas funções de administrador.<br>
-> <strong>Login:</strong> adm &nbsp;&nbsp;&nbsp;&nbsp;<strong>Senha:</strong> 123
+
 
 
 - *Programação em Par (atualização-Entrega 4):*
