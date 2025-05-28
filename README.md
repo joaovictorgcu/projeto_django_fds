@@ -100,7 +100,7 @@ Com o avanço do projeto, a programação em par foi se tornando uma prática ca
 Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualidade do código quanto no entrosamento do grupo. No final, sentimos que a programação em par não só ajudou a superar desafios técnicos, mas também fortaleceu a confiança entre os membros da equipe.
 
 <p align="center">
-  <a href="" target="_blank">
+  <a href="https://youtu.be/y9vwD9Z30DM" target="_blank">
     <img src="https://img.shields.io/badge/▶️%20Screencast%20CI/CD-blue?style=for-the-badge" alt="Screencast CI/CD">
   </a>
   <a href="" target="_blank">
