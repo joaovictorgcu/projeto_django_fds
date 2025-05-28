@@ -93,7 +93,7 @@ Durante o desenvolvimento do nosso projeto, a equipe passou a utilizar com mais 
 
 ![backlog3](media/entregas/backlog3.jpg)
 ![quadro3](media/entregas/quadro3.jpg)
-![bugTracker3](media/entregas/Bugtracker3.jpg)
+![bugTracker3](media/entregas/Bugtracker%203%20att.jpg)
 
 - *Programação em Par (atualização-Entrega 4):*
 Com o avanço do projeto, a programação em par foi se tornando uma prática cada vez mais natural para nós, principalmente nos momentos em que surgiam dúvidas ou problemas mais difíceis. Nessas horas, trabalhar em dupla acelerava a busca por soluções e deixava o processo menos estressante. Ao mesmo tempo, aprendemos a equilibrar: quando a tarefa exigia mais concentração, cada um seguia sozinho.
