@@ -299,7 +299,6 @@ def agendar_test_drive(request, carro_id):
             messages.error(request, "Data inválida.")
             return redirect('detalhes_carro', carro_id=carro_id)
 
-        # Cria ou recupera o chat com o vendedor
         chat, _ = Chat.objects.get_or_create(
             car=carro,
             comprador=request.user,
