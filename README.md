@@ -107,6 +107,9 @@ Esse equilíbrio entre colaboração e autonomia fez diferença tanto na qualida
 
 - [ScreenCastTesteAutomatizado](https://youtu.be/XC_sxcnWlZk)
 
+- [NOVO LINK DO SITE:](https://match3autos.azurewebsites.net)
+- Login: adm || Senha: 123
+
 </details>
 
 ## Equipe
