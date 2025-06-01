@@ -292,7 +292,7 @@ def agendar_test_drive(request, carro_id):
             messages.error(request, "Por favor, selecione a data.")
             return redirect('detalhes_carro', carro_id=carro_id)
 
-        # Converte a data para o formato dd-mm-aaaa
+   
         try:
             data_formatada = datetime.strptime(data_visita, "%Y-%m-%d").strftime("%d-%m-%Y")
         except ValueError:
